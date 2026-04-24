@@ -354,9 +354,35 @@ main {
 }
 
 .details span {
+  position: relative;
+  z-index: 1;
   color: #b5a076;
   font-family: "Cormorant Garamond", serif;
   font-size: 2rem;
+}
+
+.event-icon {
+  position: absolute;
+  top: 1.4rem;
+  right: 1.45rem;
+  width: 58px;
+  height: 58px;
+  display: grid;
+  place-items: center;
+  color: #b5a076;
+  opacity: 0.78;
+}
+
+.event-icon svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 3.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  filter: drop-shadow(0 8px 12px rgba(150, 128, 83, 0.12));
 }
 
 .details h3,
