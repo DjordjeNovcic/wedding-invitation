@@ -1598,12 +1598,28 @@ fieldset {
   -webkit-user-drag: none;
 }
 
+.intro-hit-area {
+  position: absolute;
+  inset: 0;
+  z-index: 9;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.intro-hit-area:focus-visible {
+  outline: 2px solid rgba(230, 198, 122, 0.68);
+  outline-offset: 6px;
+}
+
 .seal--poster {
   position: absolute;
-  left: 44%;
+  left: 50%;
   top: 55%;
   width: 62px;
   transform: translate(-50%, -50%);
+  pointer-events: none;
   background:
     radial-gradient(circle at 35% 28%, #f6cf73, #c6851f 55%, #8b5318);
   box-shadow:
@@ -1679,7 +1695,7 @@ fieldset {
   }
 
   .seal--poster {
-    left: 44%;
+    left: 50%;
     top: 55%;
     width: 62px;
   }
