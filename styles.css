@@ -130,27 +130,33 @@ body::before {
   width: 260px;
   height: 360px;
   pointer-events: none;
-  opacity: 0.22;
+  opacity: 0.16;
 
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
 
-  filter: sepia(1) saturate(0.55) hue-rotate(18deg);
+  filter: blur(0.4px);
   mix-blend-mode: multiply;
 }
 
 .floral-bg--top {
-  top: -52px;
-  right: -58px;
-  background-image: url("https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?q=80&w=600&auto=format&fit=crop");
-  transform: rotate(12deg);
+  top: -40px;
+  right: -30px;
+
+  background-image: url("https://png.pngtree.com/png-clipart/20230914/original/pngtree-beige-watercolor-floral-border-wedding-decoration-png-image_12147209.png");
+
+  opacity: 0.18;
+  transform: rotate(8deg);
 }
 
 .floral-bg--bottom {
-  bottom: -74px;
-  left: -58px;
-  background-image: url("https://images.unsplash.com/photo-1501004318641-b39e6451bec6?q=80&w=600&auto=format&fit=crop");
+  bottom: -60px;
+  left: -30px;
+
+  background-image: url("https://png.pngtree.com/png-clipart/20230914/original/pngtree-beige-floral-watercolor-border-png-image_12147186.png");
+
+  opacity: 0.18;
   transform: rotate(190deg);
 }
 
