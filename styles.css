@@ -235,17 +235,24 @@ body::before {
   display: grid;
   place-items: center;
 
-  margin-bottom: 0.6rem;
-
+  margin-bottom: 1rem;
+  transform: translateY(6px);
   opacity: 0.55;
-}
 
-.intro-doves {
-  mask-image: linear-gradient(to bottom, rgba(0,0,0,0.9), transparent);
+   mask-image: linear-gradient(to bottom, rgba(0,0,0,0.9), transparent);
 }
 
 .intro-doves img {
-  width: 140px;
+  width: 130px;
+
+  filter:
+    sepia(1)
+    saturate(3)
+    hue-rotate(10deg)
+    brightness(0.85)
+    drop-shadow(0 6px 10px rgba(184, 150, 74, 0.25));
+
+  opacity: 0.9;
 }
 
 .envelope {
