@@ -6,8 +6,8 @@ const wedding = {
   reception: "Ručak u 15:00h",
   events: [
     "09:00h - Skup svatova kod porodice Novčić, Nate Radulović 14",
-    "10:30h - Skup svatova kod porodice Subotić",
-    "12:00h - Crkveno venčanje",
+    "10:30h - Skup svatova kod porodice Subotić, Kraljevića Marka 29",
+    "12:00h - Crkveno venčanje, Stara crkva, Hram Svete Trojice",
     "15:00h - Ručak",
     "16:30h - Građansko venčanje",
   ],
