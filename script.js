@@ -31,7 +31,9 @@ function openInvitation() {
 
   invitationOpened = true;
   intro.classList.add("is-opening");
-  envelope.classList.add("is-opening");
+  if (envelope) {
+    envelope.classList.add("is-opening");
+  }
 
   setTimeout(() => {
     intro.classList.add("is-open");
@@ -46,7 +48,7 @@ function openInvitation() {
     setTimeout(() => {
       intro.hidden = true;
     }, 950);
-  }, 2350);
+  }, 1700);
 }
 
 openInvite.addEventListener("click", openInvitation);
