@@ -238,20 +238,13 @@ body::before {
   left: 50%;
   transform: translateX(-50%);
 
-  opacity: 0.18;
+  opacity: 3;
   pointer-events: none;
   z-index: 0;
 }
 
 .intro-doves img {
-  width: 160px;
-
-  filter:
-    sepia(1)
-    saturate(2)
-    brightness(1);
-
-  opacity: 0.6;
+  width: 200px;
 }
 
 .envelope {
