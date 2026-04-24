@@ -142,18 +142,28 @@ body::before {
 }
 
 .seal {
-  z-index: 2;
+  z-index: 3;
   display: grid;
   place-items: center;
   width: 118px;
   aspect-ratio: 1;
   border-radius: 999px;
   cursor: pointer;
+
   background:
     radial-gradient(circle at 35% 28%, #f4d487, #bc8432 52%, #6d321f);
+
   border: 2px solid rgba(255, 241, 191, 0.8);
-  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.36), inset 0 0 0 9px rgba(94, 38, 30, 0.32);
+
+  box-shadow:
+    0 16px 48px rgba(0, 0, 0, 0.36),
+    inset 0 0 0 9px rgba(94, 38, 30, 0.32);
+
   transition: transform 220ms ease;
+
+  transform: translateZ(0);
+  will-change: transform;
+  backface-visibility: hidden;
 }
 
 .seal::after {
