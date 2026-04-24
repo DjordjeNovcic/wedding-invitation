@@ -725,6 +725,48 @@ textarea {
   transition: all 0.2s ease;
 }
 
+.scroll-indicator {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+
+  width: 22px;
+  height: 36px;
+
+  border: 2px solid rgba(184, 150, 74, 0.6);
+  border-radius: 12px;
+
+  display: flex;
+  justify-content: center;
+  padding-top: 6px;
+}
+
+.scroll-indicator span {
+  width: 4px;
+  height: 8px;
+  border-radius: 2px;
+  background: #b8964a;
+
+  animation: scrollMove 1.6s ease-in-out infinite;
+}
+
+@keyframes scrollMove {
+  0% {
+    opacity: 0;
+    transform: translateY(0);
+  }
+
+  40% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+
 input,
 textarea {
   width: 100%;
