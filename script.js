@@ -1,9 +1,16 @@
 const wedding = {
-  couple: "Djordje i Milica",
-  start: "2026-06-20T16:00:00+02:00",
-  end: "2026-06-21T02:00:00+02:00",
-  ceremony: "Hram Svetog Save, Beograd",
-  reception: "Restoran po dogovoru",
+  couple: "Ksenija i Djordje",
+  start: "2026-09-12T09:00:00+02:00",
+  end: "2026-09-12T19:00:00+02:00",
+  ceremony: "Crkveno vencanje u 12:00",
+  reception: "Rucak u 15:00",
+  events: [
+    "09:00 - Skup svatova kod porodice Novcic, Nate Radulovic 14",
+    "10:30 - Skup svatova kod porodice Subotic",
+    "12:00 - Crkveno vencanje",
+    "15:00 - Rucak",
+    "16:30 - Gradjansko vencanje",
+  ],
 };
 
 const intro = document.getElementById("intro");
@@ -27,6 +34,10 @@ function openInvitation() {
     }).catch(() => {
       soundIcon.textContent = "×";
     });
+
+    setTimeout(() => {
+      intro.hidden = true;
+    }, 950);
   }, 720);
 }
 
@@ -80,7 +91,7 @@ function setupCalendarLink() {
     action: "TEMPLATE",
     text: `Vencanje ${wedding.couple}`,
     dates: `${calendarDate(wedding.start)}/${calendarDate(wedding.end)}`,
-    details: `Crkveno vencanje: ${wedding.ceremony}\nSvecani rucak: ${wedding.reception}`,
+    details: wedding.events.join("\n"),
     location: wedding.reception,
   });
 

@@ -4,10 +4,10 @@ PRODID:-//Wedding Invitation//SR//EN
 BEGIN:VEVENT
 UID:wedding-invitation-20260620@example.com
 DTSTAMP:20260424T120000Z
-DTSTART:20260620T140000Z
-DTEND:20260621T000000Z
-SUMMARY:Vencanje Djordje i Milica
-LOCATION:Beograd
-DESCRIPTION:Crkveno vencanje i svecani rucak.
+DTSTART:20260912T070000Z
+DTEND:20260912T170000Z
+SUMMARY:Vencanje Ksenija i Djordje
+LOCATION:Nate Radulovic 14
+DESCRIPTION:09:00 Skup svatova kod porodice Novcic, Nate Radulovic 14\n10:30 Skup svatova kod porodice Subotic\n12:00 Crkveno vencanje\n15:00 Rucak\n16:30 Gradjansko vencanje
 END:VEVENT
 END:VCALENDAR
