@@ -154,9 +154,20 @@ body::before {
   transform: rotate(190deg);
 }
 
-.intro-card > *:not(.floral-bg) {
+.floral-bg {
+  z-index: 0;
+}
+
+.intro-card {
   position: relative;
-  z-index: 1;
+}
+
+.envelope,
+.intro-monogram,
+.intro__copy,
+.intro-divider {
+  position: relative;
+  z-index: 2;
 }
 
 .intro-botanical {
