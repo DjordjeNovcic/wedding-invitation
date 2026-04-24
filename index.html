@@ -153,27 +153,45 @@
 
       <section class="rsvp section-reveal" aria-label="Potvrda dolaska">
         <div class="rsvp__card">
+          <div class="rsvp__ornament" aria-hidden="true">✦</div>
           <p class="eyebrow">RSVP</p>
           <h3>Potvrdite dolazak</h3>
           <p class="rsvp__note">Molimo vas da potvrdite prisustvo do 1. septembra 2026.</p>
+          <p class="rsvp__subnote">Vaš odgovor nam pomaže da sve pripremimo baš kako treba za naš dan.</p>
           <form id="rsvpForm">
-            <label>
-              Ime i prezime
-              <input name="name" type="text" autocomplete="name" required />
-            </label>
-            <label>
-              Broj gostiju
-              <input name="guests" type="number" min="1" max="10" value="1" required />
-            </label>
-            <fieldset>
+            <div class="field-shell">
+              <label>
+                Ime i prezime
+                <input name="name" type="text" autocomplete="name" placeholder="Unesite ime i prezime" required />
+              </label>
+            </div>
+            <div class="field-shell">
+              <label>
+                Broj gostiju
+                <input name="guests" type="number" min="1" max="10" value="1" required />
+              </label>
+            </div>
+            <fieldset class="choice-group">
               <legend>Da li dolazite?</legend>
-              <label class="radio"><input type="radio" name="answer" value="Da" checked /> Da</label>
-              <label class="radio"><input type="radio" name="answer" value="Ne" /> Ne</label>
+              <div class="choice-grid">
+                <label class="radio-card">
+                  <input type="radio" name="answer" value="Da" checked />
+                  <span class="radio-card__title">Da, dolazim</span>
+                  <span class="radio-card__meta">Biću sa vama tog dana</span>
+                </label>
+                <label class="radio-card">
+                  <input type="radio" name="answer" value="Ne" />
+                  <span class="radio-card__title">Ne mogu</span>
+                  <span class="radio-card__meta">Javljam da ne planiramo mesto uzalud</span>
+                </label>
+              </div>
             </fieldset>
-            <label>
-              Poruka
-              <textarea name="message" rows="3"></textarea>
-            </label>
+            <div class="field-shell">
+              <label>
+                Poruka
+                <textarea name="message" rows="4" placeholder="Ako želite, ostavite kratku poruku za mladence"></textarea>
+              </label>
+            </div>
             <button type="submit">Pošalji potvrdu</button>
           </form>
           <p class="form-status" id="formStatus" aria-live="polite"></p>
