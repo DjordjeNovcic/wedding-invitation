@@ -249,13 +249,15 @@ body::before {
 
 .envelope {
   position: relative;
-  z-index: 1;
+  z-index: 3;
 
   width: min(78vw, 300px);
   aspect-ratio: 1.55;
 
   display: grid;
   place-items: center;
+
+  isolation: isolate;
 
   /* remove card look */
   border-radius: 0;
@@ -270,28 +272,29 @@ body::before {
   overflow: visible;
 }
 
-.envelope::before,
-.envelope::after {
+.envelope__letter::before,
+.envelope__letter::after {
   content: "";
   position: absolute;
-  bottom: 0;
-  width: 50%;
-  height: 100%;
-  z-index: 3;
+  left: 18%;
+  right: 18%;
+  height: 1px;
+
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(180, 122, 35, 0.18),
+    transparent
+  );
 }
 
-/* LEFT fold */
-.envelope::before {
-  left: 0;
-  background: linear-gradient(135deg, #e6d6b8, #d8c3a0);
-  clip-path: polygon(0 0, 100% 50%, 0 100%);
+.envelope__letter::before {
+  top: 20%;
 }
 
-/* RIGHT fold */
-.envelope::after {
-  right: 0;
-  background: linear-gradient(225deg, #e6d6b8, #d8c3a0);
-  clip-path: polygon(100% 0, 0 50%, 100% 100%);
+.envelope__letter::after {
+  top: 26%;
+  box-shadow: 0 18px 25px rgba(0,0,0,0.15);
 }
 
 .envelope.is-opening {
@@ -553,7 +556,7 @@ body::before {
 
 .intro__copy {
   position: relative;
-  z-index: 1;
+  z-index: 0;
   width: min(100%, 340px);
   text-align: center;
   transition: transform 0.7s ease, opacity 0.55s ease;
