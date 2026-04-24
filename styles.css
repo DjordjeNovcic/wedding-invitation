@@ -626,11 +626,11 @@ main {
 
 .rsvp__card h3,
 .rsvp__card .eyebrow {
-  color: #fffdf8;
+  color: #5a4a2f;
 }
 
 .rsvp__note {
-  color: #fffdf8;
+  color: #6b5b3a;
   font-family: "Cormorant Garamond", serif;
   font-size: 1.35rem;
   line-height: 1.35;
@@ -644,7 +644,7 @@ form {
 
 label,
 legend {
-  color: #fffdf8;
+  color: #6b5b3a;
   font-size: 0.78rem;
   font-weight: 700;
   letter-spacing: 0.12em;
