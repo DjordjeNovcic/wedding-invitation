@@ -168,6 +168,22 @@ body::before {
   position: relative;
 }
 
+.intro-names {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(2.2rem, 6vw, 3.2rem);
+  color: #b47a23;
+}
+
+.intro-names i {
+  font-style: normal;
+  font-size: 0.7em;
+  opacity: 0.7;
+}
+
 .envelope,
 .intro-monogram,
 .intro__copy,
@@ -213,27 +229,6 @@ body::before {
   font-family: "Cormorant Garamond", serif;
   font-size: 3.05rem;
   line-height: 1;
-}
-
-.intro-monogram::before,
-.intro-monogram::after {
-  content: "";
-  position: absolute;
-  width: 84px;
-  height: 106px;
-  border: 1px solid rgba(180, 122, 35, 0.38);
-  border-right: 0;
-  border-radius: 100% 0 0 100%;
-}
-
-.intro-monogram::before {
-  left: -5.7rem;
-  transform: rotate(-8deg);
-}
-
-.intro-monogram::after {
-  right: -5.7rem;
-  transform: scaleX(-1) rotate(-8deg);
 }
 
 .envelope {
