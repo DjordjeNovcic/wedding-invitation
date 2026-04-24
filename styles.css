@@ -253,6 +253,7 @@ body::before {
   width: min(78vw, 300px);
   aspect-ratio: 1.55;
   display: grid;
+  overflow: hidden;
   place-items: center;
   border-radius: 8px;
   border: 1px solid rgba(178, 121, 30, 0.44);
@@ -306,12 +307,14 @@ body::before {
     radial-gradient(circle at 50% 18%, rgba(255,255,255,0.82), transparent 7rem),
     linear-gradient(180deg, #fffdf7, #f6ead3);
   box-shadow:
-    0 10px 26px rgba(91, 68, 32, 0.14),
+    0 18px 35px rgba(60, 40, 10, 0.18),
     inset 0 1px 0 rgba(255,255,255,0.75);
   transform: translateY(58%) scale(0.93);
   opacity: 0.04;
   transition: opacity 0.38s ease;
   will-change: transform, opacity;
+  mask-image: linear-gradient(to top, black 65%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to top, black 65%, transparent 100%);
 }
 
 .envelope__letter::before,
@@ -341,7 +344,9 @@ body::before {
 
 .envelope.is-opening .envelope__letter {
   opacity: 1;
-  animation: letterReveal 1.65s cubic-bezier(0.2, 0.9, 0.25, 1) 0.22s forwards;
+  animation:
+    letterReveal 1.9s cubic-bezier(0.3, 0.8, 0.3, 1) 0.5s forwards,
+    letterShadow 1.9s ease 0.5s forwards;
 }
 
 .envelope__flap {
@@ -1449,38 +1454,54 @@ fieldset {
 
 @keyframes letterReveal {
   0% {
-    transform: translateY(60%) scale(0.92);
+    transform: translateY(65%) scale(0.95);
     opacity: 0;
   }
 
-  15% {
-    transform: translateY(50%) scale(0.94);
-    opacity: 0.4;
+  10% {
+    opacity: 0.3;
   }
 
-  30% {
-    transform: translateY(35%) scale(0.96);
-    opacity: 0.7;
+  25% {
+    transform: translateY(55%) scale(0.97);
+    opacity: 0.6;
   }
 
   45% {
-    transform: translateY(10%) scale(0.98);
-    opacity: 1;
+    transform: translateY(35%) scale(0.98);
+    opacity: 0.9;
   }
 
   65% {
-    transform: translateY(-60%) scale(1);
+    transform: translateY(10%) scale(1);
+    opacity: 1;
   }
 
   80% {
-    transform: translateY(-85%) scale(1);
-  }
-
-  92% {
-    transform: translateY(-78%) scale(1);
+    transform: translateY(-20%) scale(1);
   }
 
   100% {
-    transform: translateY(-80%) scale(1);
+    transform: translateY(-45%) scale(1);
+  }
+}
+
+@keyframes letterShadow {
+  0% {
+    box-shadow:
+      0 6px 12px rgba(60, 40, 10, 0.08),
+      inset 0 1px 0 rgba(255,255,255,0.75);
+  }
+
+  50% {
+    box-shadow:
+      0 20px 40px rgba(60, 40, 10, 0.2),
+      inset 0 1px 0 rgba(255,255,255,0.75);
+  }
+
+  100% {
+    box-shadow:
+      0 14px 28px rgba(60, 40, 10, 0.15),
+      inset 0 1px 0 rgba(255,255,255,0.75);
   }
 }
