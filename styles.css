@@ -62,9 +62,29 @@ a {
 }
 
 .intro.is-open {
-  opacity: 0;
-  visibility: hidden;
+  animation: introFadeOut 1.2s ease forwards;
   pointer-events: none;
+}
+
+@keyframes introFadeOut {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+    filter: blur(0px);
+  }
+
+  60% {
+    opacity: 1;
+    transform: scale(1.03);
+    filter: blur(2px);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(1.08);
+    filter: blur(6px);
+    visibility: hidden;
+  }
 }
 
 .intro__grain,
