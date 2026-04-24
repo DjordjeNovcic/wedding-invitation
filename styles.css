@@ -205,39 +205,61 @@ body::before {
 }
 
 .envelope.is-opening {
-  transform: translateY(26px) scale(0.96);
+  transform: translateY(12px) scale(0.98);
   filter: drop-shadow(0 30px 36px rgba(92, 62, 18, 0.18));
 }
 
 .envelope__letter {
   position: absolute;
-  left: 7%;
-  right: 7%;
-  bottom: 24%;
-  z-index: 0;
-  height: 70%;
+  left: 9%;
+  right: 9%;
+  bottom: 14%;
+  z-index: 1;
+  height: 78%;
   display: grid;
   place-items: center;
   border: 1px solid rgba(180, 122, 35, 0.36);
+  border-radius: 6px 6px 0 0;
   background:
     radial-gradient(circle at 50% 18%, rgba(255,255,255,0.82), transparent 7rem),
     linear-gradient(180deg, #fffdf7, #f6ead3);
-  box-shadow: 0 10px 26px rgba(91, 68, 32, 0.14);
-  transform: translateY(44%) scale(0.92);
-  opacity: 0;
+  box-shadow:
+    0 10px 26px rgba(91, 68, 32, 0.14),
+    inset 0 1px 0 rgba(255,255,255,0.75);
+  transform: translateY(54%) scale(0.94);
+  opacity: 0.06;
   transition:
-    transform 1.1s cubic-bezier(0.16, 1, 0.3, 1) 0.42s,
-    opacity 0.55s ease 0.32s;
+    transform 1.28s cubic-bezier(0.16, 1, 0.3, 1) 0.46s,
+    opacity 0.65s ease 0.4s;
+}
+
+.envelope__letter::before,
+.envelope__letter::after {
+  content: "";
+  position: absolute;
+  left: 14%;
+  right: 14%;
+  height: 1px;
+  background: rgba(180, 122, 35, 0.22);
+}
+
+.envelope__letter::before {
+  top: 18%;
+}
+
+.envelope__letter::after {
+  top: 24%;
 }
 
 .envelope__letter span {
   color: rgba(180, 122, 35, 0.72);
   font-family: "Cormorant Garamond", serif;
-  font-size: 2rem;
+  font-size: 2.15rem;
+  transform: translateY(-22%);
 }
 
 .envelope.is-opening .envelope__letter {
-  transform: translateY(-58%) scale(1);
+  transform: translateY(-74%) scale(1);
   opacity: 1;
 }
 
@@ -247,6 +269,7 @@ body::before {
   clip-path: polygon(0 0, 100% 0, 50% 56%);
   background: linear-gradient(180deg, #fff2d8, #ead7b5);
   transform-origin: top;
+  z-index: 4;
 
   transform: perspective(1000px) rotateX(0deg);
   transition:
@@ -260,8 +283,20 @@ body::before {
   z-index: 4;
 }
 
-.seal {
+.envelope__front {
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 54%;
   z-index: 3;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 0 0, 50% 52%);
+  background:
+    linear-gradient(180deg, rgba(255,245,222,0.98), rgba(233,215,181,0.98));
+  border-top: 1px solid rgba(178, 121, 30, 0.36);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.72);
+}
+
+.seal {
+  z-index: 6;
   display: grid;
   place-items: center;
   width: 82px;
