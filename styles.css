@@ -164,6 +164,7 @@ body::before {
   transform: translateZ(0);
   will-change: transform;
   backface-visibility: hidden;
+  animation: sealPulse 2.2s ease-in-out infinite;
 }
 
 .seal::after {
@@ -899,5 +900,28 @@ fieldset {
   100% {
     transform: scale(1);
     box-shadow: 0 12px 28px rgba(91, 75, 45, 0.18);
+  }
+}
+
+@keyframes sealPulse {
+  0% {
+    transform: scale(1);
+    box-shadow:
+      0 16px 48px rgba(0, 0, 0, 0.36),
+      inset 0 0 0 9px rgba(94, 38, 30, 0.32);
+  }
+
+  50% {
+    transform: scale(1.08);
+    box-shadow:
+      0 22px 60px rgba(184, 150, 74, 0.4),
+      inset 0 0 0 9px rgba(94, 38, 30, 0.32);
+  }
+
+  100% {
+    transform: scale(1);
+    box-shadow:
+      0 16px 48px rgba(0, 0, 0, 0.36),
+      inset 0 0 0 9px rgba(94, 38, 30, 0.32);
   }
 }
