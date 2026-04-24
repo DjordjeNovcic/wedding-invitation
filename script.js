@@ -22,7 +22,15 @@ const soundIcon = document.getElementById("soundIcon");
 const form = document.getElementById("rsvpForm");
 const formStatus = document.getElementById("formStatus");
 
+let invitationOpened = false;
+
 function openInvitation() {
+  if (invitationOpened) {
+    return;
+  }
+
+  invitationOpened = true;
+  intro.classList.add("is-opening");
   envelope.classList.add("is-opening");
 
   setTimeout(() => {
@@ -38,7 +46,7 @@ function openInvitation() {
     setTimeout(() => {
       intro.hidden = true;
     }, 950);
-  }, 3000);
+  }, 2350);
 }
 
 openInvite.addEventListener("click", openInvitation);
