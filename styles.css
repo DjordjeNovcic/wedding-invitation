@@ -246,17 +246,6 @@ body::before {
 
 .intro-doves img {
   width: 140px;
-  max-width: 60%;
-
-  filter:
-    grayscale(1)
-    brightness(0)
-    sepia(1)
-    hue-rotate(20deg)
-    saturate(3.5)
-    brightness(0.85);
-
-  opacity: 0.75;
 }
 
 .envelope {
