@@ -1,15 +1,15 @@
 const wedding = {
-  couple: "Ksenija i Djordje",
+  couple: "Đorđe i Ksenija",
   start: "2026-09-12T09:00:00+02:00",
   end: "2026-09-12T19:00:00+02:00",
-  ceremony: "Crkveno vencanje u 12:00",
-  reception: "Rucak u 15:00",
+  ceremony: "Crkveno venčanje u 12:00h",
+  reception: "Ručak u 15:00h",
   events: [
-    "09:00 - Skup svatova kod porodice Novcic, Nate Radulovic 14",
-    "10:30 - Skup svatova kod porodice Subotic",
-    "12:00 - Crkveno vencanje",
-    "15:00 - Rucak",
-    "16:30 - Gradjansko vencanje",
+    "09:00h - Skup svatova kod porodice Novčić, Nate Radulović 14",
+    "10:30h - Skup svatova kod porodice Subotić",
+    "12:00h - Crkveno venčanje",
+    "15:00h - Ručak",
+    "16:30h - Građansko venčanje",
   ],
 };
 
@@ -104,10 +104,10 @@ form.addEventListener("submit", (event) => {
   localStorage.setItem("wedding-rsvp", JSON.stringify({ ...data, sentAt: new Date().toISOString() }));
 
   const text = encodeURIComponent(
-    `RSVP za vencanje\nIme: ${data.name}\nDolazim: ${data.answer}\nBroj gostiju: ${data.guests}\nPoruka: ${data.message || "-"}`
+    `RSVP za venčanje\nIme: ${data.name}\nDolazim: ${data.answer}\nBroj gostiju: ${data.guests}\nPoruka: ${data.message || "-"}`
   );
 
-  formStatus.innerHTML = `Sacuvano. Za sada potvrdu mozete poslati i preko <a href="mailto:djordje.novcic95@gmail.com?subject=RSVP%20za%20vencanje&body=${text}">emaila</a>.`;
+  formStatus.innerHTML = `Sačuvano. Za sada potvrdu možete poslati i preko <a href="mailto:djordje.novcic95@gmail.com?subject=RSVP%20za%20ven%C4%8Danje&body=${text}">emaila</a>.`;
   form.reset();
 });
 

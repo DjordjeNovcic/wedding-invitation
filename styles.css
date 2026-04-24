@@ -202,9 +202,9 @@ main {
   z-index: 1;
   margin: 0;
   font-family: "Cormorant Garamond", serif;
-  font-size: clamp(4.5rem, 19vw, 8.5rem);
+  font-size: clamp(3.7rem, 15vw, 7.3rem);
   font-weight: 500;
-  line-height: 0.78;
+  line-height: 0.82;
 }
 
 .hero__date {
@@ -273,7 +273,14 @@ main {
 }
 
 .details p {
+  margin: 0.75rem 0 0;
   color: var(--muted);
+}
+
+.details .detail-address {
+  margin-top: 0.35rem;
+  color: rgba(248, 239, 224, 0.86);
+  font-size: 0.9rem;
 }
 
 .details a {
