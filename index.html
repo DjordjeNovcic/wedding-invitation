@@ -1,216 +1,227 @@
 <!doctype html>
 <html lang="sr">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#11100d" />
-    <meta name="description" content="Ksenija i Đorđe | Pozivnica za venčanje" />
-    <meta property="og:title" content="Ksenija i Đorđe | Pozivnica za venčanje" />
-    <meta property="og:description" content="Sa radošću vas pozivamo da budete deo našeg dana." />
-    <meta property="og:type" content="website" />
-    <title>Ksenija i Đorđe | Pozivnica za venčanje</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Great+Vibes&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="styles.css" />
-  </head>
-  <body class="locked">
-    <main>
-      <section class="intro" id="intro" aria-label="Otvaranje pozivnice">
-        <div class="intro__grain"></div>
-        <div class="intro-card">
-
-           <div class="floral-bg floral-bg--top"></div>
-          <div class="floral-bg floral-bg--bottom"></div>
-          
-          <div class="intro-botanical intro-botanical--top" aria-hidden="true"></div>
-          <div class="intro-botanical intro-botanical--bottom" aria-hidden="true"></div>
-          
-          <div class="intro-monogram" aria-hidden="true">
-            <span>K & Đ</span>
-          </div>
-          <div class="envelope" id="envelope">
-            <div class="envelope__letter" aria-hidden="true">
-              <span>K & Đ</span>
+   <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <meta name="theme-color" content="#11100d" />
+      <meta name="description" content="Ksenija i Đorđe | Pozivnica za venčanje" />
+      <meta property="og:title" content="Ksenija i Đorđe | Pozivnica za venčanje" />
+      <meta property="og:description" content="Sa radošću vas pozivamo da budete deo našeg dana." />
+      <meta property="og:type" content="website" />
+      <title>Ksenija i Đorđe | Pozivnica za venčanje</title>
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+      <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Great+Vibes&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet" />
+      <link rel="stylesheet" href="styles.css" />
+   </head>
+   <body class="locked">
+      <main>
+         <section class="intro" id="intro" aria-label="Otvaranje pozivnice">
+            <div class="intro__grain"></div>
+            <div class="intro-card">
+               <div class="floral-bg floral-bg--top"></div>
+               <div class="floral-bg floral-bg--bottom"></div>
+               <div class="intro-botanical intro-botanical--top" aria-hidden="true"></div>
+               <div class="intro-botanical intro-botanical--bottom" aria-hidden="true"></div>
+               <div class="intro-names">
+                  <span>Ksenija</span>
+                  <i>&</i>
+                  <span>Đorđe</span>
+               </div>
+               <div class="envelope" id="envelope">
+                  <div class="envelope__letter" aria-hidden="true">
+                     <span>K & Đ</span>
+                  </div>
+                  <div class="envelope__flap"></div>
+                  <div class="envelope__front" aria-hidden="true"></div>
+                  <div class="seal" id="openInvite" role="button" tabindex="0" aria-label="Otvori pozivnicu">
+                     <span class="seal__initials">K&Đ</span>
+                  </div>
+               </div>
+               <div class="intro__copy">
+                  <p>Pozivnica za venčanje</p>
+                  <h1>Dodirni pečat</h1>
+               </div>
+               <div class="intro-divider" aria-hidden="true">
+                  <span></span><i>♥</i><span></span>
+               </div>
             </div>
-            <div class="envelope__flap"></div>
-            <div class="envelope__front" aria-hidden="true"></div>
-            <div class="seal" id="openInvite" role="button" tabindex="0" aria-label="Otvori pozivnicu">
-              <span class="seal__initials">K&Đ</span>
+         </section>
+         <button class="sound-toggle" id="soundToggle" aria-label="Ukljuci ili iskljuci muziku" hidden>
+         <span id="soundIcon">♪</span>
+         </button>
+         <audio id="weddingAudio" loop preload="metadata">
+            <source src="muzika.mp3" type="audio/mpeg" />
+         </audio>
+         <section class="hero section-reveal">
+            <div class="floral-corner floral-corner--top" aria-hidden="true"></div>
+            <div class="floral-corner floral-corner--bottom" aria-hidden="true"></div>
+            <div class="hero__frame">
+               <p class="eyebrow">Sa radošću vas pozivamo</p>
+               <h2>Ksenija<br />&<br />Đorđe</h2>
+               <p class="hero__date">Subota, 12. septembar 2026.</p>
+               <div class="hero__monogram" aria-hidden="true">ĐK</div>
             </div>
-          </div>
-          <div class="intro__copy">
-            <p>Pozivnica za venčanje</p>
-            <h1>Dodirni pečat</h1>
-          </div>
-          <div class="intro-divider" aria-hidden="true">
-            <span></span><i>♥</i><span></span>
-          </div>
-        </div>
-      </section>
-
-      <button class="sound-toggle" id="soundToggle" aria-label="Ukljuci ili iskljuci muziku" hidden>
-        <span id="soundIcon">♪</span>
-      </button>
-
-      <audio id="weddingAudio" loop preload="metadata">
-        <source src="muzika.mp3" type="audio/mpeg" />
-      </audio>
-
-      <section class="hero section-reveal">
-        <div class="floral-corner floral-corner--top" aria-hidden="true"></div>
-        <div class="floral-corner floral-corner--bottom" aria-hidden="true"></div>
-        <div class="hero__frame">
-          <p class="eyebrow">Sa radošću vas pozivamo</p>
-          <h2>Ksenija<br />&<br />Đorđe</h2>
-          <p class="hero__date">Subota, 12. septembar 2026.</p>
-          <div class="hero__monogram" aria-hidden="true">ĐK</div>
-        </div>
-        <div class="scroll-indicator" aria-hidden="true">
-  <span></span>
-</div>
-      </section>
-
-      <section class="message section-reveal">
-        <p>
-          Neki dani se pamte po muzici, neki po ljudima, a neki po tome što sve
-          odjednom dobije svoje mesto. Voleli bismo da baš vi budete sa nama
-          kada kažemo naše najvažnije da.
-        </p>
-      </section>
-
-      <section class="details section-reveal" aria-label="Raspored venčanja">
-        <div class="section-heading">
-          <p class="eyebrow">Plan dana</p>
-          <h2>Raspored slavlja</h2>
-        </div>
-        <article>
-          <span>01</span>
-          <div class="event-icon" aria-hidden="true">
-            <svg viewBox="0 0 64 64"><path d="M10 31 32 13l22 18"/><path d="M16 29v24h32V29"/><path d="M25 53V36h14v17"/></svg>
-          </div>
-          <h3>Skup svatova kod porodice Novčić</h3>
-          <p>09:00h</p>
-          <p class="detail-address">Nate Radulović 14</p>
-          <a href="https://share.google/MmAcnyQKQudsJsunQ" target="_blank" rel="noreferrer">Vidi mapu</a>
-        </article>
-        <article>
-          <span>02</span>
-          <div class="event-icon" aria-hidden="true">
-            <svg viewBox="0 0 64 64"><path d="M10 31 32 13l22 18"/><path d="M16 29v24h32V29"/><path d="M25 53V36h14v17"/></svg>
-          </div>
-          <h3>Skup svatova kod porodice Subotić</h3>
-          <p>10:30h</p>
-          <p class="detail-address">Kraljevića Marka 29</p>
-          <a href="https://maps.app.goo.gl/8Lnuz4WEc2KxkS827" target="_blank" rel="noreferrer">Vidi mapu</a>
-        </article>
-        <article>
-          <span>03</span>
-          <div class="event-icon" aria-hidden="true">
-            <svg viewBox="0 0 64 64"><path d="M32 10v44"/><path d="M22 20h20"/><path d="M14 54h36"/><path d="M18 54V31l14-10 14 10v23"/><path d="M28 54V39h8v15"/></svg>
-          </div>
-          <h3>Crkveno venčanje</h3>
-          <p>12:00h</p>
-          <p class="detail-address">Stara crkva, Hram Svete Trojice</p>
-          <a href="https://share.google/YiNNLxdcxfB1tERpt" target="_blank" rel="noreferrer">Vidi mapu</a>
-        </article>
-        <article>
-          <span>04</span>
-          <div class="event-icon" aria-hidden="true">
-            <svg viewBox="0 0 64 64"><path d="M22 10h16l-3 18a10 10 0 1 1-10 0Z"/><path d="M30 42v12"/><path d="M22 54h16"/><path d="M43 12h11l-2 14a7 7 0 1 1-7 0Z"/><path d="M49 40v10"/><path d="M43 50h12"/></svg>
-          </div>
-          <h3>Ručak</h3>
-          <p>15:00h</p>
-          <p class="detail-address">Exclusive Event Center</p>
-          <a href="https://share.google/xTjYgNVnRnZBYyIXZ" target="_blank" rel="noreferrer">Vidi mapu</a>
-        </article>
-        <article>
-          <span>05</span>
-          <div class="event-icon" aria-hidden="true">
-            <svg viewBox="0 0 64 64">
-      <circle cx="26" cy="36" r="12"></circle>
-      <circle cx="40" cy="36" r="12"></circle>
-      <path d="M34 20 l3 -6 l3 6"></path>
-    </svg>
-          </div>
-          <h3>Građansko venčanje</h3>
-          <p>16:30h</p>
-          <p class="detail-address">Exclusive Event Center</p>
-        </article>
-      </section>
-
-      <section class="countdown section-reveal" aria-label="Odbrojavanje do venčanja">
-        <p class="eyebrow">Još samo</p>
-        <div class="countdown__grid" id="countdown">
-          <div><strong id="days">--</strong><span>Dana</span></div>
-          <div><strong id="hours">--</strong><span>Sati</span></div>
-          <div><strong id="minutes">--</strong><span>Minuta</span></div>
-          <div><strong id="seconds">--</strong><span>Sekundi</span></div>
-        </div>
-      </section>
-
-      <section class="calendar section-reveal">
-        <h3>Sačuvaj datum</h3>
-        <div class="actions">
-          <a class="button" id="googleCalendar" target="_blank" rel="noreferrer">Google Calendar</a>
-          <a class="button button--ghost" href="pozivnica.ics">Apple / Outlook</a>
-        </div>
-      </section>
-
-      <section class="rsvp section-reveal" aria-label="Potvrda dolaska">
-        <div class="rsvp__card">
-          <div class="rsvp__ornament" aria-hidden="true">✦</div>
-          <p class="eyebrow">RSVP</p>
-          <h3>Potvrdite dolazak</h3>
-          <p class="rsvp__note">Molimo vas da potvrdite prisustvo do 1. septembra 2026.</p>
-          <p class="rsvp__subnote">Vaš odgovor nam pomaže da sve pripremimo baš kako treba za naš dan.</p>
-          <form id="rsvpForm">
-            <div class="field-shell">
-              <label>
-                Ime i prezime
-                <input name="name" type="text" autocomplete="name" placeholder="Unesite ime i prezime" required />
-              </label>
+            <div class="scroll-indicator" aria-hidden="true">
+               <span></span>
             </div>
-            <div class="field-shell">
-              <label>
-                Broj gostiju
-                <input name="guests" type="number" min="1" max="10" value="1" required />
-              </label>
+         </section>
+         <section class="message section-reveal">
+            <p>
+               Neki dani se pamte po muzici, neki po ljudima, a neki po tome što sve
+               odjednom dobije svoje mesto. Voleli bismo da baš vi budete sa nama
+               kada kažemo naše najvažnije da.
+            </p>
+         </section>
+         <section class="details section-reveal" aria-label="Raspored venčanja">
+            <div class="section-heading">
+               <p class="eyebrow">Plan dana</p>
+               <h2>Raspored slavlja</h2>
             </div>
-            <fieldset class="choice-group">
-              <legend>Da li dolazite?</legend>
-              <div class="choice-grid">
-                <label class="radio-card">
-                  <input type="radio" name="answer" value="Da" checked />
-                  <span class="radio-card__indicator" aria-hidden="true"></span>
-                  <span class="radio-card__content">
-                    <span class="radio-card__title">Da, dolazim</span>
-                    <span class="radio-card__meta">Biću sa vama tog dana</span>
-                  </span>
-                </label>
-                <label class="radio-card">
-                  <input type="radio" name="answer" value="Ne" />
-                  <span class="radio-card__indicator" aria-hidden="true"></span>
-                  <span class="radio-card__content">
-                    <span class="radio-card__title">Ne mogu</span>
-                    <span class="radio-card__meta">Javljam da ne planiramo mesto uzalud</span>
-                  </span>
-                </label>
-              </div>
-            </fieldset>
-            <div class="field-shell">
-              <label>
-                Poruka
-                <textarea name="message" rows="4" placeholder="Ako želite, ostavite kratku poruku za mladence"></textarea>
-              </label>
+            <article>
+               <span>01</span>
+               <div class="event-icon" aria-hidden="true">
+                  <svg viewBox="0 0 64 64">
+                     <path d="M10 31 32 13l22 18"/>
+                     <path d="M16 29v24h32V29"/>
+                     <path d="M25 53V36h14v17"/>
+                  </svg>
+               </div>
+               <h3>Skup svatova kod porodice Novčić</h3>
+               <p>09:00h</p>
+               <p class="detail-address">Nate Radulović 14</p>
+               <a href="https://share.google/MmAcnyQKQudsJsunQ" target="_blank" rel="noreferrer">Vidi mapu</a>
+            </article>
+            <article>
+               <span>02</span>
+               <div class="event-icon" aria-hidden="true">
+                  <svg viewBox="0 0 64 64">
+                     <path d="M10 31 32 13l22 18"/>
+                     <path d="M16 29v24h32V29"/>
+                     <path d="M25 53V36h14v17"/>
+                  </svg>
+               </div>
+               <h3>Skup svatova kod porodice Subotić</h3>
+               <p>10:30h</p>
+               <p class="detail-address">Kraljevića Marka 29</p>
+               <a href="https://maps.app.goo.gl/8Lnuz4WEc2KxkS827" target="_blank" rel="noreferrer">Vidi mapu</a>
+            </article>
+            <article>
+               <span>03</span>
+               <div class="event-icon" aria-hidden="true">
+                  <svg viewBox="0 0 64 64">
+                     <path d="M32 10v44"/>
+                     <path d="M22 20h20"/>
+                     <path d="M14 54h36"/>
+                     <path d="M18 54V31l14-10 14 10v23"/>
+                     <path d="M28 54V39h8v15"/>
+                  </svg>
+               </div>
+               <h3>Crkveno venčanje</h3>
+               <p>12:00h</p>
+               <p class="detail-address">Stara crkva, Hram Svete Trojice</p>
+               <a href="https://share.google/YiNNLxdcxfB1tERpt" target="_blank" rel="noreferrer">Vidi mapu</a>
+            </article>
+            <article>
+               <span>04</span>
+               <div class="event-icon" aria-hidden="true">
+                  <svg viewBox="0 0 64 64">
+                     <path d="M22 10h16l-3 18a10 10 0 1 1-10 0Z"/>
+                     <path d="M30 42v12"/>
+                     <path d="M22 54h16"/>
+                     <path d="M43 12h11l-2 14a7 7 0 1 1-7 0Z"/>
+                     <path d="M49 40v10"/>
+                     <path d="M43 50h12"/>
+                  </svg>
+               </div>
+               <h3>Ručak</h3>
+               <p>15:00h</p>
+               <p class="detail-address">Exclusive Event Center</p>
+               <a href="https://share.google/xTjYgNVnRnZBYyIXZ" target="_blank" rel="noreferrer">Vidi mapu</a>
+            </article>
+            <article>
+               <span>05</span>
+               <div class="event-icon" aria-hidden="true">
+                  <svg viewBox="0 0 64 64">
+                     <circle cx="26" cy="36" r="12"></circle>
+                     <circle cx="40" cy="36" r="12"></circle>
+                     <path d="M34 20 l3 -6 l3 6"></path>
+                  </svg>
+               </div>
+               <h3>Građansko venčanje</h3>
+               <p>16:30h</p>
+               <p class="detail-address">Exclusive Event Center</p>
+            </article>
+         </section>
+         <section class="countdown section-reveal" aria-label="Odbrojavanje do venčanja">
+            <p class="eyebrow">Još samo</p>
+            <div class="countdown__grid" id="countdown">
+               <div><strong id="days">--</strong><span>Dana</span></div>
+               <div><strong id="hours">--</strong><span>Sati</span></div>
+               <div><strong id="minutes">--</strong><span>Minuta</span></div>
+               <div><strong id="seconds">--</strong><span>Sekundi</span></div>
             </div>
-            <button type="submit">Pošalji potvrdu</button>
-          </form>
-          <p class="form-status" id="formStatus" aria-live="polite"></p>
-        </div>
-      </section>
-    </main>
-
-    <script src="script.js"></script>
-  </body>
+         </section>
+         <section class="calendar section-reveal">
+            <h3>Sačuvaj datum</h3>
+            <div class="actions">
+               <a class="button" id="googleCalendar" target="_blank" rel="noreferrer">Google Calendar</a>
+               <a class="button button--ghost" href="pozivnica.ics">Apple / Outlook</a>
+            </div>
+         </section>
+         <section class="rsvp section-reveal" aria-label="Potvrda dolaska">
+            <div class="rsvp__card">
+               <div class="rsvp__ornament" aria-hidden="true">✦</div>
+               <p class="eyebrow">RSVP</p>
+               <h3>Potvrdite dolazak</h3>
+               <p class="rsvp__note">Molimo vas da potvrdite prisustvo do 1. septembra 2026.</p>
+               <p class="rsvp__subnote">Vaš odgovor nam pomaže da sve pripremimo baš kako treba za naš dan.</p>
+               <form id="rsvpForm">
+                  <div class="field-shell">
+                     <label>
+                     Ime i prezime
+                     <input name="name" type="text" autocomplete="name" placeholder="Unesite ime i prezime" required />
+                     </label>
+                  </div>
+                  <div class="field-shell">
+                     <label>
+                     Broj gostiju
+                     <input name="guests" type="number" min="1" max="10" value="1" required />
+                     </label>
+                  </div>
+                  <fieldset class="choice-group">
+                     <legend>Da li dolazite?</legend>
+                     <div class="choice-grid">
+                        <label class="radio-card">
+                        <input type="radio" name="answer" value="Da" checked />
+                        <span class="radio-card__indicator" aria-hidden="true"></span>
+                        <span class="radio-card__content">
+                        <span class="radio-card__title">Da, dolazim</span>
+                        <span class="radio-card__meta">Biću sa vama tog dana</span>
+                        </span>
+                        </label>
+                        <label class="radio-card">
+                        <input type="radio" name="answer" value="Ne" />
+                        <span class="radio-card__indicator" aria-hidden="true"></span>
+                        <span class="radio-card__content">
+                        <span class="radio-card__title">Ne mogu</span>
+                        <span class="radio-card__meta">Javljam da ne planiramo mesto uzalud</span>
+                        </span>
+                        </label>
+                     </div>
+                  </fieldset>
+                  <div class="field-shell">
+                     <label>
+                     Poruka
+                     <textarea name="message" rows="4" placeholder="Ako želite, ostavite kratku poruku za mladence"></textarea>
+                     </label>
+                  </div>
+                  <button type="submit">Pošalji potvrdu</button>
+               </form>
+               <p class="form-status" id="formStatus" aria-live="polite"></p>
+            </div>
+         </section>
+      </main>
+      <script src="script.js"></script>
+   </body>
 </html>
