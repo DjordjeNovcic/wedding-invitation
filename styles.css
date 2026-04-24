@@ -561,13 +561,26 @@ main {
 }
 
 .calendar {
+  position: relative;
   text-align: center;
-  padding-top: 2rem;
+  padding: 4rem 1rem 5rem;
+
+  background:
+    radial-gradient(circle at 50% 20%, rgba(255,255,255,0.9), transparent 20rem),
+    linear-gradient(180deg, #f4eee3, #e6d6b3);
+
+  border-radius: 20px;
+  margin: 2rem auto;
 }
 
-.countdown .eyebrow,
-.calendar h3 {
+/* countdown ostaje kako jeste */
+.countdown .eyebrow {
   color: #9b8c68;
+}
+
+/* calendar dobija premium gold */
+.calendar h3 {
+  color: #b8964a;
 }
 
 .actions {
