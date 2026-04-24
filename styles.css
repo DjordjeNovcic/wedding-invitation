@@ -234,7 +234,7 @@ body::before {
 
 .intro-doves {
   position: absolute;
-  top: 60px;
+  top: 40px;
   left: 50%;
   transform: translateX(-50%);
 
