@@ -191,12 +191,13 @@ body::before {
   aspect-ratio: 1.55;
   display: grid;
   place-items: center;
+  border-radius: 8px;
   border: 1px solid rgba(178, 121, 30, 0.44);
   background:
-    linear-gradient(135deg, transparent 49.7%, rgba(180, 122, 35, 0.52) 50%, transparent 50.3%),
-    linear-gradient(225deg, transparent 49.7%, rgba(180, 122, 35, 0.52) 50%, transparent 50.3%),
-    linear-gradient(180deg, #fff5de, #ead8b8);
-  box-shadow: 0 24px 46px rgba(91, 68, 32, 0.22);
+    linear-gradient(180deg, #fff9ee, #eadcc3);
+  box-shadow:
+  0 40px 80px rgba(120, 95, 50, 0.18),
+  0 10px 25px rgba(0,0,0,0.12);
   transform-style: preserve-3d;
   margin-bottom: 0.6rem;
   transition:
@@ -284,13 +285,15 @@ body::before {
   position: absolute;
   inset: 0;
   clip-path: polygon(0 0, 100% 0, 50% 56%);
-  background: linear-gradient(180deg, #fff2d8, #ead7b5);
+  background: linear-gradient(180deg, #fffaf0, #e8d6b8);
   transform-origin: top;
   z-index: 4;
 
   transform: perspective(1000px) rotateX(0deg);
   transition: filter 0.6s ease;
   will-change: transform;
+  box-shadow:
+  inset 0 2px 6px rgba(0,0,0,0.08);
 }
 
 .envelope.is-opening .envelope__flap {
@@ -322,6 +325,23 @@ body::before {
   background: linear-gradient(180deg, rgba(124, 88, 33, 0.18), transparent 80%);
   clip-path: polygon(0 0, 100% 0, 50% 86%);
   opacity: 0.45;
+}
+
+.envelope__flap::after {
+  content: "";
+  position: absolute;
+  left: 10%;
+  right: 10%;
+  bottom: 0;
+  height: 30px;
+
+  background: linear-gradient(
+    to bottom,
+    rgba(0,0,0,0.12),
+    transparent
+  );
+
+  opacity: 0.4;
 }
 
 .envelope.is-opening .envelope__front {
@@ -360,14 +380,16 @@ body::before {
 }
 
 .envelope::after {
-  content: "";
+   content: "";
   position: absolute;
-  inset: -16px;
-  z-index: 5;
-  border-radius: 18px;
+  inset: 0;
+  border-radius: 6px;
+
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.8),
+    inset 0 -2px 6px rgba(0,0,0,0.08);
+
   pointer-events: none;
-  opacity: 0;
-  background: radial-gradient(circle at 50% 52%, rgba(255, 232, 172, 0.64), transparent 34%);
 }
 
 .envelope.is-opening::after {
