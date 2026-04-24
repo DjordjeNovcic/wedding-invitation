@@ -48,7 +48,7 @@ function openInvitation() {
     setTimeout(() => {
       intro.hidden = true;
     }, 950);
-  }, 1700);
+  }, 2950);
 }
 
 openInvite.addEventListener("click", openInvitation);
