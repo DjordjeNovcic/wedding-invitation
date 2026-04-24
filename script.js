@@ -50,8 +50,13 @@ openInvite.addEventListener("keydown", (event) => {
 });
 
 soundToggle.addEventListener("click", () => {
-  audio.muted = !audio.muted;
-  soundIcon.textContent = audio.muted ? "×" : "♪";
+  if (audio.paused) {
+    audio.play();
+    soundIcon.textContent = "♪";
+  } else {
+    audio.pause();
+    soundIcon.textContent = "×";
+  }
 });
 
 const revealObserver = new IntersectionObserver((entries) => {
