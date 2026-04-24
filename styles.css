@@ -265,9 +265,13 @@ main {
   display: grid;
   place-items: center;
   padding: 4rem 1.15rem;
+
   background:
-    radial-gradient(circle at 50% 28%, rgba(255, 255, 255, 0.95), transparent 19rem),
-    linear-gradient(180deg, #fffdf8, #f5efe5);
+    linear-gradient(rgba(255,253,248,0.75), rgba(255,253,248,0.9)),
+    url("https://images.unsplash.com/photo-1522673607200-164d1b6ce486?q=80&w=1600&auto=format&fit=crop");
+
+  background-size: cover;
+  background-position: center;
 }
 
 .floral-corner {
