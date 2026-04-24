@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="sr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#11100d" />
+    <meta name="description" content="Pozivnica za vencanje" />
+    <meta property="og:title" content="Ime i Ime | Pozivnica za vencanje" />
+    <meta property="og:description" content="Sa radoscu vas pozivamo da budete deo naseg dana." />
+    <meta property="og:type" content="website" />
+    <title>Ime i Ime | Pozivnica za vencanje</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="locked">
+    <main>
+      <section class="intro" id="intro" aria-label="Otvaranje pozivnice">
+        <div class="intro__grain"></div>
+        <div class="envelope" id="envelope">
+          <div class="envelope__flap"></div>
+          <div class="seal" id="openInvite" role="button" tabindex="0" aria-label="Otvori pozivnicu">
+            <span class="seal__initials">D & M</span>
+          </div>
+          <div class="intro__copy">
+            <p>Pozivnica za vencanje</p>
+            <h1>Dodirni pecat</h1>
+          </div>
+        </div>
+      </section>
+
+      <button class="sound-toggle" id="soundToggle" aria-label="Ukljuci ili iskljuci muziku" hidden>
+        <span id="soundIcon">♪</span>
+      </button>
+
+      <audio id="weddingAudio" loop preload="metadata">
+        <source src="assets/music.mp3" type="audio/mpeg" />
+      </audio>
+
+      <section class="hero section-reveal">
+        <div class="hero__frame">
+          <p class="eyebrow">Sa radoscu vas pozivamo</p>
+          <h2>Djordje<br />&<br />Milica</h2>
+          <p class="hero__date">Subota, 20. jun 2026.</p>
+          <div class="hero__monogram" aria-hidden="true">DM</div>
+        </div>
+      </section>
+
+      <section class="message section-reveal">
+        <p>
+          Neki dani se pamte po muzici, neki po ljudima, a neki po tome sto sve
+          odjednom dobije svoje mesto. Voleli bismo da bas vi budete sa nama
+          kada kazemo nase najvaznije da.
+        </p>
+      </section>
+
+      <section class="details section-reveal" aria-label="Detalji vencanja">
+        <article>
+          <span>01</span>
+          <h3>Crkveno vencanje</h3>
+          <p>16:00 · Hram Svetog Save, Beograd</p>
+          <a href="https://maps.google.com/" target="_blank" rel="noreferrer">Mapa</a>
+        </article>
+        <article>
+          <span>02</span>
+          <h3>Svecani rucak</h3>
+          <p>18:00 · Restoran po dogovoru</p>
+          <a href="https://maps.google.com/" target="_blank" rel="noreferrer">Mapa</a>
+        </article>
+      </section>
+
+      <section class="countdown section-reveal" aria-label="Odbrojavanje do vencanja">
+        <p class="eyebrow">Jos samo</p>
+        <div class="countdown__grid" id="countdown">
+          <div><strong id="days">--</strong><span>Dana</span></div>
+          <div><strong id="hours">--</strong><span>Sati</span></div>
+          <div><strong id="minutes">--</strong><span>Minuta</span></div>
+          <div><strong id="seconds">--</strong><span>Sekundi</span></div>
+        </div>
+      </section>
+
+      <section class="calendar section-reveal">
+        <h3>Sacuvaj datum</h3>
+        <div class="actions">
+          <a class="button" id="googleCalendar" target="_blank" rel="noreferrer">Google Calendar</a>
+          <a class="button button--ghost" href="pozivnica.ics">Apple / Outlook</a>
+        </div>
+      </section>
+
+      <section class="rsvp section-reveal" aria-label="Potvrda dolaska">
+        <div class="rsvp__card">
+          <p class="eyebrow">RSVP</p>
+          <h3>Potvrdite dolazak</h3>
+          <p class="rsvp__note">Molimo vas da potvrdite prisustvo do 1. maja 2026.</p>
+          <form id="rsvpForm">
+            <label>
+              Ime i prezime
+              <input name="name" type="text" autocomplete="name" required />
+            </label>
+            <label>
+              Broj gostiju
+              <input name="guests" type="number" min="1" max="10" value="1" required />
+            </label>
+            <fieldset>
+              <legend>Da li dolazite?</legend>
+              <label class="radio"><input type="radio" name="answer" value="Da" checked /> Da</label>
+              <label class="radio"><input type="radio" name="answer" value="Ne" /> Ne</label>
+            </fieldset>
+            <label>
+              Poruka
+              <textarea name="message" rows="3"></textarea>
+            </label>
+            <button type="submit">Posalji potvrdu</button>
+          </form>
+          <p class="form-status" id="formStatus" aria-live="polite"></p>
+        </div>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
