@@ -231,6 +231,34 @@ body::before {
   line-height: 1;
 }
 
+.intro-doves {
+  display: grid;
+  place-items: center;
+
+  margin-bottom: 0.6rem;
+
+  opacity: 0.55;
+}
+
+.intro-doves {
+  mask-image: linear-gradient(to bottom, rgba(0,0,0,0.9), transparent);
+}
+
+.intro-doves img {
+  width: 140px;
+  max-width: 60%;
+
+  filter:
+    grayscale(1)
+    brightness(0)
+    sepia(1)
+    hue-rotate(20deg)
+    saturate(3.5)
+    brightness(0.85);
+
+  opacity: 0.75;
+}
+
 .envelope {
   position: relative;
   z-index: 1;
