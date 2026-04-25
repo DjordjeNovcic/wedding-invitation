@@ -616,18 +616,79 @@ body::before {
   background: rgba(157, 104, 34, 0.42);
 }
 
-.sound-toggle {
+.floating-controls {
   position: fixed;
   right: 1rem;
   top: 1rem;
   z-index: 4;
-  width: 44px;
-  height: 44px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
+  opacity: 0;
+  transform: translateY(-6px);
+  transition: opacity 320ms ease, transform 320ms ease;
+  pointer-events: none;
+}
+
+.floating-controls.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.float-btn {
+  width: 40px;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   border: 1px solid rgba(214, 173, 93, 0.42);
   border-radius: 50%;
   color: #fffdf8;
   background: rgba(154, 137, 99, 0.82);
   backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  cursor: pointer;
+  padding: 0;
+  transition: background 200ms ease, transform 200ms ease;
+}
+
+.float-btn:hover,
+.float-btn:focus-visible {
+  background: rgba(184, 158, 110, 0.95);
+  transform: scale(1.05);
+}
+
+.float-btn:active {
+  transform: scale(0.94);
+}
+
+.sound-toggle {
+  /* legacy hook — kept so old layout selectors still match */
+}
+
+.share-toast {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 8px);
+  padding: 0.4rem 0.7rem;
+  font-family: "Montserrat", sans-serif;
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  color: #fffdf8;
+  background: rgba(28, 22, 14, 0.85);
+  border-radius: 8px;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateY(-4px);
+  transition: opacity 220ms ease, transform 220ms ease;
+  pointer-events: none;
+}
+
+.share-toast.is-visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 main {
@@ -1586,18 +1647,18 @@ fieldset {
   }
 }
 
-/* Poster-style intro override */
-.intro-card {
-  width: min(100%, 530px);
-  min-height: auto;
-  display: block;
+/* === Canvas-based smooth intro === */
+
+.intro {
   padding: 0;
-  border: 0;
-  background: transparent;
-  box-shadow: 0 26px 74px rgba(0, 0, 0, 0.34);
-  overflow: visible;
+  background: #efe6dc;
+  display: block;
+  min-height: 100vh;
+  min-height: 100svh;
 }
 
+/* Hide all the legacy intro chrome — we're using the scene only */
+.intro-card,
 .intro-card::before,
 .floral-bg,
 .intro-botanical,
@@ -1613,149 +1674,140 @@ fieldset {
   display: none !important;
 }
 
-.intro-poster {
+.intro-scene {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+/* Canvas + fallback img share a portrait stage matching the largest
+   user-cropped screenshot (356x599). Earlier frames are smaller and
+   render centred within the canvas, creating a natural zoom-in feel. */
+.intro-canvas,
+.intro-fallback {
+  position: absolute;
+  width: min(100vw, calc(100svh * 356 / 599));
+  height: min(calc(100vw * 599 / 356), 100svh);
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
   display: block;
-  width: 100%;
-  height: auto;
-  border-radius: 2px;
+  background: #efe6dc;
   user-select: none;
   -webkit-user-drag: none;
-  transition: opacity 260ms ease, transform 500ms ease;
+}
+
+/* Seal-cracking shake: triggered when frame 1 → frame 2 transition
+   begins (the wax seal breaks). 1s long with progressively damped
+   amplitude so it feels like a real physical aftershock — strongest
+   at the impact, then fading naturally. */
+.intro-canvas.is-shaking {
+  animation: sealShake 1000ms cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+@keyframes sealShake {
+  0%, 100% { transform: translate(-50%, -50%); }
+  6%  { transform: translate(calc(-50% - 6px), calc(-50% + 2px)) rotate(-0.5deg); }
+  12% { transform: translate(calc(-50% + 6px), calc(-50% - 2px)) rotate(0.5deg); }
+  18% { transform: translate(calc(-50% - 5px), calc(-50% + 2px)) rotate(-0.4deg); }
+  24% { transform: translate(calc(-50% + 5px), calc(-50% - 1px)) rotate(0.4deg); }
+  30% { transform: translate(calc(-50% - 4px), calc(-50% + 1px)) rotate(-0.3deg); }
+  38% { transform: translate(calc(-50% + 4px), -50%) rotate(0.3deg); }
+  46% { transform: translate(calc(-50% - 3px), -50%) rotate(-0.2deg); }
+  54% { transform: translate(calc(-50% + 3px), -50%) rotate(0.2deg); }
+  62% { transform: translate(calc(-50% - 2px), -50%) rotate(-0.1deg); }
+  70% { transform: translate(calc(-50% + 2px), -50%); }
+  78% { transform: translate(calc(-50% - 1px), -50%); }
+  86% { transform: translate(calc(-50% + 1px), -50%); }
+  93% { transform: translate(calc(-50% - 0.5px), -50%); }
+}
+
+/* Fallback static image shown until the canvas takes over (and on
+   browsers without canvas / JS off). Hidden once JS swaps it. */
+.intro-fallback {
+  z-index: 2;
+  object-fit: contain;
+}
+
+.intro-canvas {
+  z-index: 3;
+  opacity: 0;
+  transition: opacity 200ms ease;
+}
+
+.intro-canvas.is-ready {
+  opacity: 1;
+}
+
+.intro-canvas.is-ready ~ .intro-fallback {
+  display: none;
+}
+
+/* The "Dodirni pečat" pill at the bottom — fades out on click */
+.intro-cta {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: max(18vh, 120px);
+  z-index: 5;
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 360ms ease, transform 320ms ease;
+}
+
+.intro-cta.is-ready {
+  opacity: 1;
+}
+
+.intro-cta__pill {
+  display: inline-block;
+  padding: 0.6rem 1.4rem;
+  background: rgba(28, 22, 14, 0.62);
+  color: #f4e4c1;
+  border: 1px solid rgba(228, 196, 124, 0.6);
+  border-radius: 999px;
+  font-family: "Montserrat", sans-serif;
+  font-size: 0.7rem;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  animation: ctaBreathe 2.2s ease-in-out infinite;
+}
+
+@keyframes ctaBreathe {
+  0%, 100% { transform: translateY(0); opacity: 0.92; }
+  50%      { transform: translateY(-3px); opacity: 1; }
 }
 
 .intro-hit-area {
   position: absolute;
   inset: 0;
-  z-index: 9;
+  z-index: 10;
   border: 0;
   padding: 0;
+  margin: 0;
   background: transparent;
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .intro-hit-area:focus-visible {
   outline: 2px solid rgba(230, 198, 122, 0.68);
-  outline-offset: 6px;
+  outline-offset: -8px;
 }
 
-.intro-sequence {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  z-index: 11;
-  width: min(76vw, 430px);
-  aspect-ratio: 1;
-  overflow: hidden;
+/* === Animation === */
+/* All keyframe motion is driven from script.js into the canvas;
+   only the CTA pill and hit-area state changes are handled here. */
+
+.intro.is-opening .intro-cta {
   opacity: 0;
+  transform: translateY(10px);
+}
+
+.intro.is-opening .intro-hit-area {
   pointer-events: none;
-  transform: translate(-50%, -50%) scale(0.92);
-  transition: opacity 220ms ease, transform 320ms ease;
-  border-radius: 24px;
-  box-shadow: 0 26px 60px rgba(78, 58, 28, 0.18);
-}
-
-.intro-sequence img {
-  display: block;
-  width: 300%;
-  height: auto;
-  max-width: none;
-  transform: translate3d(0, 0, 0);
-}
-
-.intro.is-opening .intro-card {
-  animation: introPosterLift 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-}
-
-.intro.is-opening .intro-poster {
-  opacity: 0.08;
-  transform: scale(0.985);
-}
-
-.intro.is-opening .intro-sequence {
-  opacity: 1;
-  transform: translate(-50%, -50%) scale(1);
-  animation: introSequenceZoom 2.18s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-}
-
-.intro.is-opening .intro-sequence img {
-  animation: introSequenceFrames 1.95s steps(1) forwards 120ms;
-}
-
-@keyframes introPosterLift {
-  0% {
-    transform: translateY(0) scale(1);
-    filter: brightness(1);
-  }
-
-  40% {
-    transform: translateY(-10px) scale(1.012);
-    filter: brightness(1.01);
-  }
-
-  100% {
-    transform: translateY(-26px) scale(1.03);
-    filter: brightness(1.03);
-  }
-}
-
-@keyframes introSequenceFrames {
-  0%, 15% {
-    transform: translate3d(0%, 0%, 0);
-  }
-
-  16%, 31% {
-    transform: translate3d(-33.333%, 0%, 0);
-  }
-
-  32%, 47% {
-    transform: translate3d(-66.666%, 0%, 0);
-  }
-
-  48%, 63% {
-    transform: translate3d(0%, -50%, 0);
-  }
-
-  64%, 79% {
-    transform: translate3d(-33.333%, -50%, 0);
-  }
-
-  80%, 100% {
-    transform: translate3d(-66.666%, -50%, 0);
-  }
-}
-
-@keyframes introSequenceZoom {
-  0% {
-    opacity: 0;
-    transform: translate(-50%, -50%) scale(0.92);
-    filter: brightness(1);
-  }
-
-  12% {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(1);
-  }
-
-  72% {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(1);
-    filter: brightness(1);
-  }
-
-  100% {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(1.24);
-    filter: brightness(1.03);
-  }
-}
-
-@media (max-width: 520px) {
-  .intro-card {
-    width: min(100%, 430px);
-  }
-
-  .intro-sequence {
-    width: min(84vw, 360px);
-    border-radius: 20px;
-  }
 }
