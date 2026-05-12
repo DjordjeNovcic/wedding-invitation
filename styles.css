@@ -1752,6 +1752,11 @@ fieldset {
   z-index: 2;
 }
 
+.envelope--open {
+  z-index: 2;
+  opacity: 0;
+}
+
 .envelope--sealed {
   z-index: 3;
 }

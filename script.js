@@ -21,6 +21,7 @@ const formStatus = document.getElementById("formStatus");
 const introCta = document.getElementById("introCta");
 const envelopeSealed = document.getElementById("envelopeSealed");
 const envelopeBlank = document.getElementById("envelopeBlank");
+const envelopeOpen = document.getElementById("envelopeOpen");
 const envelopeGlow = document.getElementById("envelopeGlow");
 const envelopeStage = document.querySelector(".envelope-stage");
 const heroSection = document.querySelector(".hero");
@@ -48,6 +49,7 @@ function resetEnvelopeState() {
   if (!window.gsap) return;
   gsap.set(envelopeSealed, { scale: 1, y: 0, rotate: 0, opacity: 1 });
   gsap.set(envelopeBlank,  { scale: 1, y: 0, rotate: 0, opacity: 1 });
+  gsap.set(envelopeOpen,   { scale: 0.97, y: 0, rotate: 0, opacity: 0 });
   gsap.set(envelopeGlow,   { opacity: 0, scale: 0.7 });
   gsap.set(envelopeStage,  { scale: 1, y: 0 });
   sealPieces.forEach((piece) => {
@@ -103,9 +105,23 @@ function buildIntroTimeline() {
     ease: "power2.out",
   }, 0.40);
 
-  // 6. The (now seal-less) envelope lifts away — the hero behind starts to
-  //    show through as the intro overlay fades.
+  // 6. Cross-fade from the sealed-but-closed envelope into the open
+  //    envelope with the K&Đ card peeking out — reads as the flap opening.
+  tl.to(envelopeOpen, {
+    opacity: 1,
+    scale: 1,
+    duration: 0.35,
+    ease: "power2.out",
+  }, 0.45);
   tl.to(envelopeBlank, {
+    opacity: 0,
+    duration: 0.30,
+    ease: "power2.inOut",
+  }, 0.55);
+
+  // 7. The opened envelope lifts away — the hero behind starts to show
+  //    through as the intro overlay fades.
+  tl.to(envelopeOpen, {
     scale: 0.94,
     y: -64,
     rotate: -2.4,
