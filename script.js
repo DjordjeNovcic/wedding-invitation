@@ -174,6 +174,34 @@ function startAudioSwell(totalAnimMs) {
 // scale-up animation cross-fades with the intro fade.
 const INTRO_DURATION_MS = 2000;
 
+// Soft scroll nudge that hints "there's more below" once the hero settles.
+// Bails immediately on any user input so we never fight them.
+function nudgeScroll(targetY = 140, duration = 1400) {
+  if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const startY = window.scrollY || window.pageYOffset || 0;
+  if (startY >= targetY - 4) return;
+
+  let cancelled = false;
+  const cancel = () => { cancelled = true; };
+  const opts = { once: true, passive: true };
+  window.addEventListener("wheel",      cancel, opts);
+  window.addEventListener("touchstart", cancel, opts);
+  window.addEventListener("touchmove",  cancel, opts);
+  window.addEventListener("mousedown",  cancel, opts);
+  window.addEventListener("keydown",    cancel, { once: true });
+
+  const startT = performance.now();
+  const distance = targetY - startY;
+  function tick(now) {
+    if (cancelled) return;
+    const t = Math.min((now - startT) / duration, 1);
+    const eased = 1 - Math.pow(1 - t, 4);
+    window.scrollTo(0, startY + distance * eased);
+    if (t < 1) requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+}
+
 function openInvitation() {
   if (invitationOpened || !introTl) {
     return;
@@ -202,6 +230,9 @@ function openInvitation() {
     setTimeout(() => {
       intro.hidden = true;
     }, 1100);
+
+    // Once the hero has had a beat to settle, hint at scroll.
+    setTimeout(() => nudgeScroll(140, 1400), 1500);
   }, INTRO_DURATION_MS);
 }
 
