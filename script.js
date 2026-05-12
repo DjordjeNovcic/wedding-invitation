@@ -16,14 +16,8 @@ const wedding = {
 const intro = document.getElementById("intro");
 const openInvite = document.getElementById("openInvite");
 const audio = document.getElementById("weddingAudio");
-const soundToggle = document.getElementById("soundToggle");
-const soundIcon = document.getElementById("soundIcon");
 const form = document.getElementById("rsvpForm");
 const formStatus = document.getElementById("formStatus");
-const floatingControls = document.getElementById("floatingControls");
-const replayBtn = document.getElementById("replayIntro");
-const shareBtn = document.getElementById("shareInvite");
-const shareToast = document.getElementById("shareToast");
 const introCta = document.getElementById("introCta");
 const envelopeSealed = document.getElementById("envelopeSealed");
 const envelopeBlank = document.getElementById("envelopeBlank");
@@ -147,12 +141,8 @@ function startAudioSwell(totalAnimMs) {
   audio.volume = 0;
   audio.muted = false;
   const playPromise = audio.play();
-  if (playPromise && typeof playPromise.then === "function") {
-    playPromise.then(() => {
-      soundIcon.textContent = "♪";
-    }).catch(() => {
-      soundIcon.textContent = "×";
-    });
+  if (playPromise && typeof playPromise.catch === "function") {
+    playPromise.catch(() => {});
   }
 
   const fadeStart = totalAnimMs * 0.35;
@@ -222,10 +212,6 @@ function openInvitation() {
     intro.classList.add("is-open");
     if (heroSection) heroSection.classList.add("is-visible");
     document.body.classList.remove("locked");
-    if (floatingControls) {
-      floatingControls.hidden = false;
-      requestAnimationFrame(() => floatingControls.classList.add("is-visible"));
-    }
 
     setTimeout(() => {
       intro.hidden = true;
@@ -236,85 +222,11 @@ function openInvitation() {
   }, INTRO_DURATION_MS);
 }
 
-/* === Replay intro ================================================ */
-
-function replayIntro() {
-  if (!introTl) return;
-  intro.hidden = false;
-  intro.classList.remove("is-open");
-  intro.classList.add("is-opening");
-
-  resetEnvelopeState();
-  // Tiny delay so the unhide paint completes before the timeline starts
-  setTimeout(() => introTl.restart(), 50);
-
-  setTimeout(() => {
-    intro.classList.add("is-open");
-    setTimeout(() => {
-      intro.hidden = true;
-      intro.classList.remove("is-opening");
-    }, 1100);
-  }, INTRO_DURATION_MS);
-}
-
-if (replayBtn) {
-  replayBtn.addEventListener("click", replayIntro);
-}
-
-/* === Share ======================================================= */
-
-let shareToastTimer = null;
-function flashShareToast(message) {
-  if (!shareToast) return;
-  shareToast.textContent = message;
-  shareToast.classList.add("is-visible");
-  if (shareToastTimer) clearTimeout(shareToastTimer);
-  shareToastTimer = setTimeout(() => {
-    shareToast.classList.remove("is-visible");
-  }, 2200);
-}
-
-async function shareInvitation() {
-  const data = {
-    title: "Pozivnica za venčanje",
-    text: `${wedding.couple} — 12. septembar 2026.`,
-    url: window.location.href,
-  };
-  if (navigator.share) {
-    try {
-      await navigator.share(data);
-    } catch (_) { /* user cancelled */ }
-    return;
-  }
-  if (navigator.clipboard && navigator.clipboard.writeText) {
-    try {
-      await navigator.clipboard.writeText(data.url);
-      flashShareToast("Link kopiran");
-      return;
-    } catch (_) {}
-  }
-  flashShareToast("Kopiraj link iz adresne trake");
-}
-
-if (shareBtn) {
-  shareBtn.addEventListener("click", shareInvitation);
-}
-
 openInvite.addEventListener("click", openInvitation);
 openInvite.addEventListener("keydown", (event) => {
   if (event.key === "Enter" || event.key === " ") {
     event.preventDefault();
     openInvitation();
-  }
-});
-
-soundToggle.addEventListener("click", () => {
-  if (audio.paused) {
-    audio.play();
-    soundIcon.textContent = "♪";
-  } else {
-    audio.pause();
-    soundIcon.textContent = "×";
   }
 });
 
