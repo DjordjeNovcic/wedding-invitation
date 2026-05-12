@@ -164,30 +164,40 @@ function startAudioSwell(totalAnimMs) {
 // scale-up animation cross-fades with the intro fade.
 const INTRO_DURATION_MS = 2000;
 
-// Soft scroll nudge that hints "there's more below" once the hero settles.
-// Bails immediately on any user input so we never fight them.
-function nudgeScroll(targetY = 140, duration = 1400) {
+// Slow continuous drift downward once the hero settles. Keeps going until
+// the user takes the wheel (any wheel/touch/keydown/mousedown stops it) or
+// we hit the bottom of the page. Respects prefers-reduced-motion.
+function nudgeScroll(velocity = 0.055) {  // px per ms ≈ 55px/s
   if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-  const startY = window.scrollY || window.pageYOffset || 0;
-  if (startY >= targetY - 4) return;
 
   let cancelled = false;
-  const cancel = () => { cancelled = true; };
-  const opts = { once: true, passive: true };
-  window.addEventListener("wheel",      cancel, opts);
-  window.addEventListener("touchstart", cancel, opts);
-  window.addEventListener("touchmove",  cancel, opts);
-  window.addEventListener("mousedown",  cancel, opts);
-  window.addEventListener("keydown",    cancel, { once: true });
+  function stop() {
+    if (cancelled) return;
+    cancelled = true;
+    window.removeEventListener("wheel",      stop);
+    window.removeEventListener("touchstart", stop);
+    window.removeEventListener("touchmove",  stop);
+    window.removeEventListener("mousedown",  stop);
+    window.removeEventListener("keydown",    stop);
+  }
+  const opts = { passive: true };
+  window.addEventListener("wheel",      stop, opts);
+  window.addEventListener("touchstart", stop, opts);
+  window.addEventListener("touchmove",  stop, opts);
+  window.addEventListener("mousedown",  stop, opts);
+  window.addEventListener("keydown",    stop);
 
   const startT = performance.now();
-  const distance = targetY - startY;
+  const startY = window.scrollY || window.pageYOffset || 0;
+
   function tick(now) {
     if (cancelled) return;
-    const t = Math.min((now - startT) / duration, 1);
-    const eased = 1 - Math.pow(1 - t, 4);
-    window.scrollTo(0, startY + distance * eased);
-    if (t < 1) requestAnimationFrame(tick);
+    const elapsed = now - startT;
+    const maxY = (document.documentElement.scrollHeight - window.innerHeight) - 4;
+    const targetY = Math.min(startY + velocity * elapsed, maxY);
+    window.scrollTo(0, targetY);
+    if (targetY >= maxY) { stop(); return; }
+    requestAnimationFrame(tick);
   }
   requestAnimationFrame(tick);
 }
@@ -217,8 +227,10 @@ function openInvitation() {
       intro.hidden = true;
     }, 1100);
 
-    // Once the hero has had a beat to settle, hint at scroll.
-    setTimeout(() => nudgeScroll(140, 1400), 1500);
+    // Once the hero has had a beat to settle, start a slow drift downward
+    // so the user feels there's more page below. They take over the moment
+    // they touch / scroll / type.
+    setTimeout(() => nudgeScroll(), 1500);
   }, INTRO_DURATION_MS);
 }
 
