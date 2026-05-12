@@ -11,34 +11,31 @@
       <title>Ksenija i Đorđe | Pozivnica za venčanje</title>
       <link rel="preconnect" href="https://fonts.googleapis.com" />
       <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+      <link rel="preload" as="image" href="assets/envelope-seal.jpg" fetchpriority="high" />
+      <link rel="preload" as="image" href="assets/envelope-blank.jpg" />
       <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Great+Vibes&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet" />
       <link rel="stylesheet" href="styles.css" />
-      <link rel="preload" as="image" href="assets/sc-frame-01.webp" />
-      <link rel="preload" as="image" href="assets/sc-frame-02.webp" />
-      <link rel="preload" as="image" href="assets/sc-frame-03.webp" />
-      <link rel="preload" as="image" href="assets/sc-frame-04.webp" />
-      <link rel="preload" as="image" href="assets/sc-frame-05.webp" />
-      <link rel="preload" as="image" href="assets/sc-frame-06.webp" />
-      <link rel="preload" as="image" href="assets/sc-frame-07.webp" />
-      <link rel="preload" as="image" href="assets/sc-frame-08.webp" />
-      <link rel="preload" as="image" href="assets/sc-frame-09.webp" />
-      <link rel="preload" as="image" href="assets/sc-frame-10.webp" />
-      <link rel="preload" as="image" href="assets/sc-frame-11.webp" />
-      <link rel="preload" as="image" href="assets/sc-frame-12.webp" />
-      <link rel="preload" as="image" href="assets/sc-frame-13.webp" />
-      <link rel="preload" as="image" href="assets/sc-frame-14.webp" />
-      <link rel="preload" as="image" href="assets/sc-frame-15.webp" />
-      <link rel="preload" as="image" href="assets/sc-frame-16.webp" />
-      <link rel="preload" as="image" href="assets/sc-frame-17.webp" />
-      <link rel="preload" as="image" href="assets/sc-frame-18.webp" />
-      <link rel="preload" as="image" href="assets/sc-frame-19.webp" />
    </head>
    <body class="locked">
       <main>
          <section class="intro" id="intro" aria-label="Otvaranje pozivnice">
             <div class="intro-scene">
-               <canvas class="intro-canvas" id="introCanvas" width="712" height="1198" aria-hidden="true"></canvas>
-               <img class="intro-fallback" id="introFallback" src="assets/sc-frame-01.webp" alt="Pozivnica sa zlatnim pečatom" />
+               <div class="intro-bokeh" aria-hidden="true"></div>
+               <div class="envelope-stage" aria-hidden="true">
+                  <img class="envelope envelope--blank" id="envelopeBlank"
+                       src="assets/envelope-blank.jpg"
+                       alt=""
+                       draggable="false" />
+                  <img class="envelope envelope--sealed" id="envelopeSealed"
+                       src="assets/envelope-seal.jpg"
+                       alt="Koverta sa voštanim pečatom"
+                       draggable="false" />
+                  <div class="envelope-glow" id="envelopeGlow" aria-hidden="true"></div>
+                  <img class="seal-piece seal-piece--1" id="sealPiece1" src="assets/seal-piece-1.png" alt="" draggable="false" />
+                  <img class="seal-piece seal-piece--2" id="sealPiece2" src="assets/seal-piece-2.png" alt="" draggable="false" />
+                  <img class="seal-piece seal-piece--3" id="sealPiece3" src="assets/seal-piece-3.png" alt="" draggable="false" />
+                  <img class="seal-piece seal-piece--4" id="sealPiece4" src="assets/seal-piece-4.png" alt="" draggable="false" />
+               </div>
                <div class="intro-cta" id="introCta" aria-hidden="true">
                   <span class="intro-cta__pill">Dodirni pečat</span>
                </div>
@@ -67,7 +64,7 @@
             <span class="share-toast" id="shareToast" aria-live="polite"></span>
          </div>
          <audio id="weddingAudio" loop preload="metadata">
-            <source src="muzika.mp3" type="audio/mpeg" />
+            <source src="weeding%20music.mp3" type="audio/mpeg" />
          </audio>
          <section class="hero section-reveal">
             <div class="floral-corner floral-corner--top" aria-hidden="true"></div>
@@ -245,6 +242,7 @@
             </div>
          </section>
       </main>
+      <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
       <script src="script.js"></script>
    </body>
 </html>

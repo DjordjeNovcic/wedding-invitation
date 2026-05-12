@@ -1647,17 +1647,34 @@ fieldset {
   }
 }
 
-/* === Canvas-based smooth intro === */
+/* === SVG envelope intro =========================================== */
 
 .intro {
   padding: 0;
-  background: #efe6dc;
   display: block;
   min-height: 100vh;
   min-height: 100svh;
+  background:
+    radial-gradient(ellipse at 50% 18%, rgba(255, 255, 255, 0.85), transparent 55%),
+    radial-gradient(circle at 14% 78%, rgba(228, 198, 138, 0.22), transparent 50%),
+    radial-gradient(circle at 86% 72%, rgba(192, 158, 96, 0.20), transparent 55%),
+    linear-gradient(170deg, #fbf6ec 0%, #f1e8d4 55%, #e6d8b7 100%);
+  overflow: hidden;
 }
 
-/* Hide all the legacy intro chrome — we're using the scene only */
+.intro::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 240 240' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.4' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.34  0 0 0 0 0.24  0 0 0 0 0.12  0 0 0 0.15 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: 0.4;
+  mix-blend-mode: multiply;
+  z-index: 0;
+}
+
+/* Hide all the legacy intro chrome — we're using the SVG envelope only */
 .intro-card,
 .intro-card::before,
 .floral-bg,
@@ -1667,7 +1684,6 @@ fieldset {
 .intro-monogram,
 .intro__copy,
 .intro-divider,
-.envelope,
 .envelope__letter,
 .envelope__flap,
 .envelope__front {
@@ -1678,69 +1694,112 @@ fieldset {
   position: absolute;
   inset: 0;
   overflow: hidden;
+  perspective: 1200px;
 }
 
-/* Canvas + fallback img share a portrait stage matching the largest
-   user-cropped screenshot (356x599). Earlier frames are smaller and
-   render centred within the canvas, creating a natural zoom-in feel. */
-.intro-canvas,
-.intro-fallback {
+.intro-bokeh {
   position: absolute;
-  width: min(100vw, calc(100svh * 356 / 599));
-  height: min(calc(100vw * 599 / 356), 100svh);
+  inset: -10%;
+  background:
+    radial-gradient(circle at 22% 30%, rgba(232, 196, 132, 0.30), transparent 6%),
+    radial-gradient(circle at 78% 22%, rgba(232, 196, 132, 0.22), transparent 5%),
+    radial-gradient(circle at 14% 72%, rgba(232, 196, 132, 0.18), transparent 4%),
+    radial-gradient(circle at 86% 68%, rgba(232, 196, 132, 0.26), transparent 6%),
+    radial-gradient(circle at 50% 88%, rgba(232, 196, 132, 0.20), transparent 5%);
+  filter: blur(1.5px);
+  animation: bokehDrift 18s ease-in-out infinite alternate;
+  pointer-events: none;
+  mix-blend-mode: multiply;
+}
+
+@keyframes bokehDrift {
+  0%   { transform: translate3d(0, 0, 0) scale(1); }
+  100% { transform: translate3d(-1.5%, -2.5%, 0) scale(1.04); }
+}
+
+.envelope-stage {
+  position: absolute;
   left: 50%;
   top: 50%;
+  width: min(92vw, 480px);
+  aspect-ratio: 4 / 3;
   transform: translate(-50%, -50%);
+  z-index: 4;
+  pointer-events: none;
+}
+
+.envelope {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
   display: block;
-  background: #efe6dc;
   user-select: none;
   -webkit-user-drag: none;
+  filter: drop-shadow(0 28px 50px rgba(60, 40, 20, 0.30));
+  will-change: transform, opacity;
+  background: none;
+  border-radius: 0;
+  border: 0;
+  box-shadow: none;
+  aspect-ratio: auto;
+  isolation: auto;
+  transform-origin: 50% 60%;
 }
 
-/* Seal-cracking shake: triggered when frame 1 → frame 2 transition
-   begins (the wax seal breaks). 1s long with progressively damped
-   amplitude so it feels like a real physical aftershock — strongest
-   at the impact, then fading naturally. */
-.intro-canvas.is-shaking {
-  animation: sealShake 1000ms cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
-}
-
-@keyframes sealShake {
-  0%, 100% { transform: translate(-50%, -50%); }
-  6%  { transform: translate(calc(-50% - 6px), calc(-50% + 2px)) rotate(-0.5deg); }
-  12% { transform: translate(calc(-50% + 6px), calc(-50% - 2px)) rotate(0.5deg); }
-  18% { transform: translate(calc(-50% - 5px), calc(-50% + 2px)) rotate(-0.4deg); }
-  24% { transform: translate(calc(-50% + 5px), calc(-50% - 1px)) rotate(0.4deg); }
-  30% { transform: translate(calc(-50% - 4px), calc(-50% + 1px)) rotate(-0.3deg); }
-  38% { transform: translate(calc(-50% + 4px), -50%) rotate(0.3deg); }
-  46% { transform: translate(calc(-50% - 3px), -50%) rotate(-0.2deg); }
-  54% { transform: translate(calc(-50% + 3px), -50%) rotate(0.2deg); }
-  62% { transform: translate(calc(-50% - 2px), -50%) rotate(-0.1deg); }
-  70% { transform: translate(calc(-50% + 2px), -50%); }
-  78% { transform: translate(calc(-50% - 1px), -50%); }
-  86% { transform: translate(calc(-50% + 1px), -50%); }
-  93% { transform: translate(calc(-50% - 0.5px), -50%); }
-}
-
-/* Fallback static image shown until the canvas takes over (and on
-   browsers without canvas / JS off). Hidden once JS swaps it. */
-.intro-fallback {
+.envelope--blank {
   z-index: 2;
-  object-fit: contain;
 }
 
-.intro-canvas {
+.envelope--sealed {
   z-index: 3;
+}
+
+.envelope-glow {
+  position: absolute;
+  left: 50%;
+  top: 60%;
+  width: 36%;
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, rgba(255, 222, 158, 0.65) 0%, rgba(255, 222, 158, 0.25) 30%, rgba(255, 222, 158, 0) 70%);
   opacity: 0;
-  transition: opacity 200ms ease;
+  z-index: 4;
+  mix-blend-mode: screen;
+  filter: blur(10px);
 }
 
-.intro-canvas.is-ready {
-  opacity: 1;
+.seal-piece {
+  position: absolute;
+  left: 50%;
+  top: 60%;
+  width: 32%;
+  aspect-ratio: 1;
+  object-fit: contain;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  opacity: 0;
+  z-index: 5;
+  will-change: transform, opacity;
+  user-select: none;
+  -webkit-user-drag: none;
+  filter: drop-shadow(0 10px 18px rgba(40, 6, 10, 0.55));
 }
 
-.intro-canvas.is-ready ~ .intro-fallback {
-  display: none;
+/* Hero gets a stronger, slower reveal than other sections — it's the
+   content that "emerges" from the envelope so it deserves more drama. */
+.hero.section-reveal {
+  transform: scale(0.94) translateY(36px);
+  transition: opacity 1100ms cubic-bezier(0.16, 1, 0.3, 1),
+              transform 1100ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hero.section-reveal.is-visible {
+  transform: scale(1) translateY(0);
 }
 
 /* The "Dodirni pečat" pill at the bottom — fades out on click */
@@ -1748,7 +1807,7 @@ fieldset {
   position: absolute;
   left: 0;
   right: 0;
-  bottom: max(18vh, 120px);
+  bottom: max(16vh, 110px);
   z-index: 5;
   display: flex;
   justify-content: center;
@@ -1763,10 +1822,10 @@ fieldset {
 
 .intro-cta__pill {
   display: inline-block;
-  padding: 0.6rem 1.4rem;
-  background: rgba(28, 22, 14, 0.62);
-  color: #f4e4c1;
-  border: 1px solid rgba(228, 196, 124, 0.6);
+  padding: 0.62rem 1.45rem;
+  background: rgba(255, 251, 240, 0.78);
+  color: #6e1820;
+  border: 1px solid rgba(125, 38, 44, 0.30);
   border-radius: 999px;
   font-family: "Montserrat", sans-serif;
   font-size: 0.7rem;
@@ -1774,6 +1833,7 @@ fieldset {
   text-transform: uppercase;
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
+  box-shadow: 0 8px 22px rgba(110, 80, 30, 0.12);
   animation: ctaBreathe 2.2s ease-in-out infinite;
 }
 
@@ -1799,10 +1859,6 @@ fieldset {
   outline-offset: -8px;
 }
 
-/* === Animation === */
-/* All keyframe motion is driven from script.js into the canvas;
-   only the CTA pill and hit-area state changes are handled here. */
-
 .intro.is-opening .intro-cta {
   opacity: 0;
   transform: translateY(10px);
@@ -1810,4 +1866,12 @@ fieldset {
 
 .intro.is-opening .intro-hit-area {
   pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .envelope__seal,
+  .intro-bokeh,
+  .intro-cta__pill {
+    animation: none !important;
+  }
 }

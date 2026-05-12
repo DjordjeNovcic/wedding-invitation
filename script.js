@@ -14,177 +14,127 @@ const wedding = {
 };
 
 const intro = document.getElementById("intro");
-const envelope = document.getElementById("envelope");
 const openInvite = document.getElementById("openInvite");
 const audio = document.getElementById("weddingAudio");
 const soundToggle = document.getElementById("soundToggle");
 const soundIcon = document.getElementById("soundIcon");
 const form = document.getElementById("rsvpForm");
 const formStatus = document.getElementById("formStatus");
-const introCanvas = document.getElementById("introCanvas");
 const floatingControls = document.getElementById("floatingControls");
 const replayBtn = document.getElementById("replayIntro");
 const shareBtn = document.getElementById("shareInvite");
 const shareToast = document.getElementById("shareToast");
+const introCta = document.getElementById("introCta");
+const envelopeSealed = document.getElementById("envelopeSealed");
+const envelopeBlank = document.getElementById("envelopeBlank");
+const envelopeGlow = document.getElementById("envelopeGlow");
+const envelopeStage = document.querySelector(".envelope-stage");
+const heroSection = document.querySelector(".hero");
+const sealPieces = [
+  document.getElementById("sealPiece1"),
+  document.getElementById("sealPiece2"),
+  document.getElementById("sealPiece3"),
+  document.getElementById("sealPiece4"),
+].filter(Boolean);
 
 let invitationOpened = false;
+let introTl = null;
 
-/* === Canvas envelope animation =================================== */
+/* === Envelope reveal animation ================================== */
 
-const introCtx = introCanvas ? introCanvas.getContext("2d") : null;
-const introCta = document.getElementById("introCta");
-const FRAME_URLS = Array.from({ length: 19 }, (_, i) =>
-  `assets/sc-frame-${String(i + 1).padStart(2, "0")}.webp`
-);
-const frameImages = [];
-let framesLoaded = 0;
-let allFramesReady = false;
+// Each fragment gets a different flight vector + spin so the shatter feels chaotic.
+const PIECE_FLIGHTS = [
+  { x: -210, y: -120, rot: -200, scaleEnd: 0.7,  dur: 1.20 },
+  { x:  220, y:  -80, rot:  170, scaleEnd: 0.65, dur: 1.10 },
+  { x: -130, y:  170, rot:  140, scaleEnd: 0.55, dur: 1.00 },
+  { x:  170, y:  160, rot: -160, scaleEnd: 0.50, dur: 0.95 },
+];
 
-function loadFrames() {
-  if (!introCtx) return;
-  FRAME_URLS.forEach((url, i) => {
-    const img = new Image();
-    img.decoding = "async";
-    img.onload = () => {
-      framesLoaded++;
-      if (framesLoaded === FRAME_URLS.length) {
-        allFramesReady = true;
-        drawFrame(0);
-        introCanvas.classList.add("is-ready");
-        if (introCta) introCta.classList.add("is-ready");
-      }
-    };
-    img.src = url;
-    frameImages[i] = img;
+function resetEnvelopeState() {
+  if (!window.gsap) return;
+  gsap.set(envelopeSealed, { scale: 1, y: 0, rotate: 0, opacity: 1 });
+  gsap.set(envelopeBlank,  { scale: 1, y: 0, rotate: 0, opacity: 1 });
+  gsap.set(envelopeGlow,   { opacity: 0, scale: 0.7 });
+  gsap.set(envelopeStage,  { scale: 1, y: 0 });
+  sealPieces.forEach((piece) => {
+    gsap.set(piece, { x: 0, y: 0, rotation: 0, scale: 1, opacity: 0 });
   });
 }
 
-// Frames have varying aspect ratios (cropped tightly around the subject).
-// We draw each one with object-fit: contain semantics — preserve aspect,
-// scale to fit within the canvas, centre. The empty area shows the
-// canvas background which matches the cream tone of the frames.
-function drawContain(img, w, h) {
-  const scale = Math.min(w / img.naturalWidth, h / img.naturalHeight);
-  const dw = img.naturalWidth * scale;
-  const dh = img.naturalHeight * scale;
-  const dx = (w - dw) / 2;
-  const dy = (h - dh) / 2;
-  introCtx.drawImage(img, dx, dy, dw, dh);
-}
+function buildIntroTimeline() {
+  if (!window.gsap) return null;
+  const tl = gsap.timeline({ paused: true, defaults: { ease: "power3.out" } });
 
-function clearCanvas() {
-  const w = introCanvas.width;
-  const h = introCanvas.height;
-  introCtx.fillStyle = "#efe6dc";
-  introCtx.fillRect(0, 0, w, h);
-}
+  // 1. Press feedback — sealed envelope pushes in slightly.
+  tl.to(envelopeSealed, {
+    scale: 1.035,
+    duration: 0.16,
+    ease: "power2.in",
+  }, 0);
 
-function drawFrame(index) {
-  if (!introCtx || !frameImages[index]) return;
-  clearCanvas();
-  drawContain(frameImages[index], introCanvas.width, introCanvas.height);
-}
+  // 2. Warm glow blooms across the seal.
+  tl.to(envelopeGlow, {
+    opacity: 1,
+    scale: 1.25,
+    duration: 0.34,
+    ease: "power2.out",
+  }, 0.08);
 
-function drawBlend(aIndex, bIndex, t) {
-  if (!introCtx) return;
-  const a = frameImages[aIndex];
-  const b = frameImages[bIndex];
-  if (!a || !b) return;
-  const w = introCanvas.width;
-  const h = introCanvas.height;
-  clearCanvas();
-  introCtx.globalAlpha = 1;
-  drawContain(a, w, h);
-  introCtx.globalAlpha = t;
-  drawContain(b, w, h);
-  introCtx.globalAlpha = 1;
-}
-
-/* smootherstep — sharper S-curve than smoothstep. Spends less time at
-   the 50/50 mid-blend, which reduces the "double-vision" ghost during
-   crossfades and makes each pose snap into focus faster. */
-const smootherstep = (t) => t * t * t * (t * (t * 6 - 15) + 10);
-
-/* Weighted stage timeline. Most transitions get equal weight; the
-   pivotal moments (envelope opens, card emerges, final reveal) get
-   1.4× so they breathe. A short hold sits at the very start. */
-const STAGES = (() => {
-  const HOLD_INITIAL = 0.04;
-  const HOLD_FINAL = 0.06;
-  const weights = [
-    1.5, // 1 → 2   (wax seal cracks — the dramatic moment, gets a shake)
-    1.0, // 2 → 3
-    1.0, // 3 → 4
-    1.0, // 4 → 5
-    1.0, // 5 → 6
-    1.0, // 6 → 7
-    1.0, // 7 → 8
-    1.0, // 8 → 9
-    1.0, // 9 → 10
-    1.0, // 10 → 11
-    1.0, // 11 → 12
-    1.0, // 12 → 13
-    1.0, // 13 → 14
-    1.0, // 14 → 15
-    1.2, // 15 → 16
-    1.3, // 16 → 17 (zoom to portrait card)
-    1.2, // 17 → 18
-    1.3, // 18 → 19 (final big reveal)
-  ];
-  const span = 1 - HOLD_INITIAL - HOLD_FINAL;
-  const totalWeight = weights.reduce((a, b) => a + b, 0);
-  const rows = [];
-  rows.push([0.0, HOLD_INITIAL, 0, 0]);
-  let cursor = HOLD_INITIAL;
-  weights.forEach((w, i) => {
-    const dur = (w / totalWeight) * span;
-    rows.push([cursor, cursor + dur, i, i + 1]);
-    cursor += dur;
+  // 3. SHATTER — at the peak of the press, the sealed image cuts out and
+  //    the fragments take its place at the seal position.
+  tl.set(envelopeSealed, { opacity: 0 }, 0.22);
+  sealPieces.forEach((piece) => {
+    tl.set(piece, { opacity: 1, x: 0, y: 0, rotation: 0, scale: 1 }, 0.22);
   });
-  rows.push([cursor, 1.0, weights.length, weights.length]);
-  return rows;
-})();
 
-function runIntroAnimation(durationMs) {
-  if (!introCtx || !allFramesReady) return;
-  const start = performance.now();
-  let shakeFired = false;
+  // 4. Fragments fly outward with different vectors + spins, then fade.
+  sealPieces.forEach((piece, i) => {
+    const f = PIECE_FLIGHTS[i] || PIECE_FLIGHTS[0];
+    tl.to(piece, {
+      x: f.x,
+      y: f.y,
+      rotation: f.rot,
+      scale: f.scaleEnd,
+      opacity: 0,
+      duration: f.dur,
+      ease: "power2.out",
+    }, 0.22);
+  });
 
-  function tick(now) {
-    const elapsed = now - start;
-    const t = Math.min(elapsed / durationMs, 1);
+  // 5. Glow fades with the shatter.
+  tl.to(envelopeGlow, {
+    opacity: 0,
+    scale: 1.55,
+    duration: 0.6,
+    ease: "power2.out",
+  }, 0.40);
 
-    if (t >= 1) {
-      drawFrame(FRAME_URLS.length - 1);
-      return;
-    }
+  // 6. The (now seal-less) envelope lifts away — the hero behind starts to
+  //    show through as the intro overlay fades.
+  tl.to(envelopeBlank, {
+    scale: 0.94,
+    y: -64,
+    rotate: -2.4,
+    opacity: 0,
+    duration: 1.15,
+    ease: "power3.inOut",
+  }, 0.85);
 
-    const stage = STAGES.find(([s, e]) => t >= s && t < e) || STAGES[STAGES.length - 1];
-    const [s, e, a, b] = stage;
-    if (a === b) {
-      drawFrame(a);
-    } else {
-      const local = (t - s) / (e - s);
-      drawBlend(a, b, smootherstep(local));
-    }
-
-    // Shake at the moment the wax seal cracks (start of the 1 → 2 transition)
-    if (!shakeFired && a === 0 && b === 1) {
-      shakeFired = true;
-      introCanvas.classList.add("is-shaking");
-      if (typeof navigator !== "undefined" && navigator.vibrate) {
-        try { navigator.vibrate([80, 50, 60, 40, 50, 30, 40]); } catch (_) {}
-      }
-      setTimeout(() => introCanvas.classList.remove("is-shaking"), 1040);
-    }
-
-    requestAnimationFrame(tick);
-  }
-
-  requestAnimationFrame(tick);
+  return tl;
 }
 
-loadFrames();
+function initIntro() {
+  if (!window.gsap || !envelopeSealed) return;
+  resetEnvelopeState();
+  introTl = buildIntroTimeline();
+  if (introCta) introCta.classList.add("is-ready");
+}
+
+if (window.gsap) {
+  initIntro();
+} else {
+  window.addEventListener("load", initIntro, { once: true });
+}
 
 /* === Click handler =============================================== */
 
@@ -218,27 +168,31 @@ function startAudioSwell(totalAnimMs) {
   }, fadeStart);
 }
 
+// Point in the timeline (ms after click) at which the intro overlay starts
+// fading out — by then the envelope has lifted away and the hero behind
+// begins to show. Hero gets `is-visible` at the same moment so its own
+// scale-up animation cross-fades with the intro fade.
+const INTRO_DURATION_MS = 2000;
+
 function openInvitation() {
-  if (invitationOpened || !allFramesReady) {
+  if (invitationOpened || !introTl) {
     return;
   }
 
   invitationOpened = true;
   intro.classList.add("is-opening");
-  if (envelope) {
-    envelope.classList.add("is-opening");
-  }
 
   if (typeof navigator !== "undefined" && navigator.vibrate) {
     try { navigator.vibrate(40); } catch (_) {}
   }
 
-  const animMs = 3800;
-  runIntroAnimation(animMs);
-  startAudioSwell(animMs);
+  resetEnvelopeState();
+  introTl.restart();
+  startAudioSwell(INTRO_DURATION_MS);
 
   setTimeout(() => {
     intro.classList.add("is-open");
+    if (heroSection) heroSection.classList.add("is-visible");
     document.body.classList.remove("locked");
     if (floatingControls) {
       floatingControls.hidden = false;
@@ -247,30 +201,29 @@ function openInvitation() {
 
     setTimeout(() => {
       intro.hidden = true;
-    }, 950);
-  }, animMs + 150);
+    }, 1100);
+  }, INTRO_DURATION_MS);
 }
 
 /* === Replay intro ================================================ */
 
 function replayIntro() {
-  if (!allFramesReady) return;
+  if (!introTl) return;
   intro.hidden = false;
   intro.classList.remove("is-open");
   intro.classList.add("is-opening");
-  drawFrame(0);
 
-  const animMs = 3800;
-  // Tiny delay so the unhide paint completes before the rAF starts
-  setTimeout(() => runIntroAnimation(animMs), 50);
+  resetEnvelopeState();
+  // Tiny delay so the unhide paint completes before the timeline starts
+  setTimeout(() => introTl.restart(), 50);
 
   setTimeout(() => {
     intro.classList.add("is-open");
     setTimeout(() => {
       intro.hidden = true;
       intro.classList.remove("is-opening");
-    }, 950);
-  }, animMs + 150);
+    }, 1100);
+  }, INTRO_DURATION_MS);
 }
 
 if (replayBtn) {
