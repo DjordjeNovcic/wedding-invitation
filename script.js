@@ -164,42 +164,62 @@ function startAudioSwell(totalAnimMs) {
 // scale-up animation cross-fades with the intro fade.
 const INTRO_DURATION_MS = 2000;
 
-// Slow continuous drift downward once the hero settles. Keeps going until
-// the user takes the wheel (any wheel/touch/keydown/mousedown stops it) or
-// we hit the bottom of the page. Respects prefers-reduced-motion.
-function nudgeScroll(velocity = 0.055) {  // px per ms ≈ 55px/s
+// Slow continuous drift downward once the hero settles. Driven by a
+// GPU-composited transform on <body> via Web Animations so it's smooth at
+// sub-pixel speeds (window.scrollTo rounds to integer pixels on non-Retina
+// displays, which makes 50-60px/s look jittery). The moment the user
+// touches/scrolls/types we cancel the animation, transfer the visual
+// offset onto the real document scroll position, and let them take over.
+function nudgeScroll(velocity = 0.060) {  // px per ms ≈ 60px/s
   if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-  let cancelled = false;
-  function stop() {
-    if (cancelled) return;
-    cancelled = true;
-    window.removeEventListener("wheel",      stop);
-    window.removeEventListener("touchstart", stop);
-    window.removeEventListener("touchmove",  stop);
-    window.removeEventListener("mousedown",  stop);
-    window.removeEventListener("keydown",    stop);
+  const maxY = document.documentElement.scrollHeight - window.innerHeight - 4;
+  if (maxY <= 0) return;
+
+  const body = document.body;
+  body.style.willChange = "transform";
+  const animation = body.animate(
+    [
+      { transform: "translate3d(0, 0, 0)" },
+      { transform: `translate3d(0, ${-maxY}px, 0)` },
+    ],
+    { duration: maxY / velocity, easing: "linear", fill: "forwards" }
+  );
+
+  let handed = false;
+  function handover() {
+    if (handed) return;
+    handed = true;
+
+    // Read where we visually are right now, then drop the transform and
+    // jump real scroll to match — seamless to the user.
+    let currentOffset = maxY;
+    const t = getComputedStyle(body).transform;
+    if (t && t !== "none") {
+      try { currentOffset = -new DOMMatrixReadOnly(t).m42; } catch (_) {}
+    }
+    animation.cancel();
+    body.style.transform = "";
+    body.style.willChange = "";
+    window.scrollTo(0, currentOffset);
+
+    window.removeEventListener("wheel",      handover);
+    window.removeEventListener("touchstart", handover);
+    window.removeEventListener("touchmove",  handover);
+    window.removeEventListener("mousedown",  handover);
+    window.removeEventListener("keydown",    handover);
   }
+
   const opts = { passive: true };
-  window.addEventListener("wheel",      stop, opts);
-  window.addEventListener("touchstart", stop, opts);
-  window.addEventListener("touchmove",  stop, opts);
-  window.addEventListener("mousedown",  stop, opts);
-  window.addEventListener("keydown",    stop);
+  window.addEventListener("wheel",      handover, opts);
+  window.addEventListener("touchstart", handover, opts);
+  window.addEventListener("touchmove",  handover, opts);
+  window.addEventListener("mousedown",  handover, opts);
+  window.addEventListener("keydown",    handover);
 
-  const startT = performance.now();
-  const startY = window.scrollY || window.pageYOffset || 0;
-
-  function tick(now) {
-    if (cancelled) return;
-    const elapsed = now - startT;
-    const maxY = (document.documentElement.scrollHeight - window.innerHeight) - 4;
-    const targetY = Math.min(startY + velocity * elapsed, maxY);
-    window.scrollTo(0, targetY);
-    if (targetY >= maxY) { stop(); return; }
-    requestAnimationFrame(tick);
-  }
-  requestAnimationFrame(tick);
+  // When the drift completes naturally (bottom of page), still hand over
+  // so the document scroll position matches the visual state.
+  animation.finished.then(handover).catch(() => {});
 }
 
 function openInvitation() {
