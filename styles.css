@@ -589,10 +589,11 @@ body::before {
   flex-direction: column;
   align-items: center;
   gap: 0.05em;
-  font-family: "Tangerine", cursive;
-  font-size: clamp(3.2rem, 10vw, 5.6rem);
-  font-weight: 400;
-  line-height: 0.95;
+  font-family: "Dancing Script", cursive;
+  font-optical-sizing: auto;
+  font-size: clamp(2.4rem, 7.4vw, 3.8rem);
+  font-weight: 500;
+  line-height: 1.05;
   letter-spacing: 0;
   text-transform: none;
   color: #6b5a32;
@@ -725,13 +726,7 @@ main {
   display: grid;
   place-items: center;
   padding: 4rem 1.15rem;
-
-  background:
-    linear-gradient(rgba(255,253,248,0.75), rgba(255,253,248,0.9)),
-    url("https://images.unsplash.com/photo-1522673607200-164d1b6ce486?q=80&w=1600&auto=format&fit=crop");
-
-  background-size: cover;
-  background-position: center;
+  background: linear-gradient(180deg, #fdfaf1 0%, #fbf5e6 100%);
 }
 
 .floral-corner {
@@ -909,11 +904,12 @@ main {
   margin: 0 auto;
   padding: 0 0.5rem;
   color: #3d3935;
-  font-family: "Tangerine", cursive;
-  font-weight: 400;
+  font-family: "Dancing Script", cursive;
+  font-optical-sizing: auto;
+  font-weight: 500;
   font-style: normal;
-  font-size: clamp(2.6rem, 8vw, 4.4rem);
-  line-height: 1.05;
+  font-size: clamp(1.9rem, 5.6vw, 2.9rem);
+  line-height: 1.32;
   letter-spacing: 0;
   text-align: center;
 }
