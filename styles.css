@@ -34,7 +34,7 @@ body {
     radial-gradient(circle at 50% 100%, rgba(200,180,130,0.25), transparent 35rem),
     linear-gradient(180deg, #fffdf8 0%, #f4eee3 45%, #e6d6b3 100%);
 
-  font-family: Montserrat, sans-serif;
+  font-family: Jost, sans-serif;
 }
 
 body.locked {
@@ -174,7 +174,7 @@ body::before {
   align-items: center;
   gap: 0.6rem;
 
-  font-family: "Cormorant Garamond", serif;
+  font-family: "Fraunces", serif;
   font-size: clamp(2.2rem, 6vw, 3.2rem);
   color: #b47a23;
 }
@@ -227,7 +227,7 @@ body::before {
   place-items: center;
   min-height: 104px;
   color: #b47a23;
-  font-family: "Cormorant Garamond", serif;
+  font-family: "Fraunces", serif;
   font-size: 3.05rem;
   line-height: 1;
 }
@@ -358,7 +358,7 @@ body::before {
 
 .envelope__letter span {
   color: rgba(180, 122, 35, 0.72);
-  font-family: "Cormorant Garamond", serif;
+  font-family: "Fraunces", serif;
   font-size: 2.15rem;
   transform: translateY(-22%);
 }
@@ -548,7 +548,7 @@ body::before {
 
 .seal__initials {
   color: #33140f;
-  font-family: "Cormorant Garamond", serif;
+  font-family: "Fraunces", serif;
   font-size: 1.65rem;
   font-weight: 700;
   letter-spacing: 0.08em;
@@ -593,7 +593,7 @@ body::before {
 .intro__copy h1 {
   margin: 0;
   color: #96631f;
-  font-family: "Great Vibes", cursive;
+  font-family: "Pinyon Script", cursive;
   font-size: clamp(3.4rem, 14vw, 5.6rem);
   font-weight: 400;
   line-height: 0.95;
@@ -673,7 +673,7 @@ body::before {
   right: 0;
   top: calc(100% + 8px);
   padding: 0.4rem 0.7rem;
-  font-family: "Montserrat", sans-serif;
+  font-family: "Jost", sans-serif;
   font-size: 0.7rem;
   letter-spacing: 0.06em;
   color: #fffdf8;
@@ -771,7 +771,7 @@ main {
   z-index: 1;
   margin: 0;
   color: #5a5145;
-  font-family: "Cormorant Garamond", serif;
+  font-family: "Fraunces", serif;
   font-size: clamp(3.7rem, 15vw, 7.3rem);
   font-weight: 500;
   line-height: 0.82;
@@ -813,7 +813,7 @@ main {
   right: -1rem;
   bottom: 1rem;
   color: rgba(174, 154, 104, 0.13);
-  font-family: "Cormorant Garamond", serif;
+  font-family: "Fraunces", serif;
   font-size: 11rem;
   line-height: 1;
 }
@@ -888,7 +888,7 @@ main {
   width: min(100% - 2rem, 680px);
   margin: 0 auto;
   color: #3d3935;
-  font-family: "Cormorant Garamond", serif;
+  font-family: "Fraunces", serif;
   font-size: clamp(1.9rem, 6vw, 3.45rem);
   line-height: 1.12;
   text-align: center;
@@ -911,7 +911,7 @@ main {
 .section-heading h2 {
   margin: 0;
   color: #b5a076;
-  font-family: "Cormorant Garamond", serif;
+  font-family: "Fraunces", serif;
   font-size: clamp(3.4rem, 14vw, 5.8rem);
   font-weight: 500;
   font-style: italic;
@@ -937,7 +937,7 @@ main {
   position: relative;
   z-index: 1;
   color: #b5a076;
-  font-family: "Cormorant Garamond", serif;
+  font-family: "Fraunces", serif;
   font-size: 2rem;
 }
 
@@ -970,7 +970,7 @@ main {
 .rsvp h3 {
   margin: 0.25rem 0;
   color: #b5a076;
-  font-family: "Cormorant Garamond", serif;
+  font-family: "Fraunces", serif;
   font-size: 2.35rem;
   font-weight: 500;
 }
@@ -1031,7 +1031,7 @@ main {
 
 .countdown strong {
   color: #fffdf8;
-  font-family: "Cormorant Garamond", serif;
+  font-family: "Fraunces", serif;
   font-size: clamp(2rem, 10vw, 4.2rem);
   font-weight: 500;
 }
@@ -1194,7 +1194,7 @@ main {
 
 .rsvp__note {
   color: #6b5b3a;
-  font-family: "Cormorant Garamond", serif;
+  font-family: "Fraunces", serif;
   font-size: 1.55rem;
   line-height: 1.2;
   margin-bottom: 0.55rem;
@@ -1832,7 +1832,7 @@ fieldset {
   color: #6e1820;
   border: 1px solid rgba(125, 38, 44, 0.30);
   border-radius: 999px;
-  font-family: "Montserrat", sans-serif;
+  font-family: "Jost", sans-serif;
   font-size: 0.7rem;
   letter-spacing: 0.32em;
   text-transform: uppercase;
