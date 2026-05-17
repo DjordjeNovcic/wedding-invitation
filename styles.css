@@ -885,12 +885,15 @@ main {
 .message p {
   position: relative;
   z-index: 1;
-  width: min(100% - 2rem, 680px);
+  width: min(100% - 3rem, 520px);
   margin: 0 auto;
+  padding: 0 0.5rem;
   color: #3d3935;
-  font-family: "Fraunces", serif;
-  font-size: clamp(1.9rem, 6vw, 3.45rem);
-  line-height: 1.12;
+  font-family: "Italiana", serif;
+  font-weight: 400;
+  font-size: clamp(1.7rem, 5.2vw, 2.85rem);
+  line-height: 1.28;
+  letter-spacing: 0.012em;
   text-align: center;
 }
 
