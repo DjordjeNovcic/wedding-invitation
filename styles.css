@@ -584,6 +584,17 @@ body::before {
     0 2px 6px rgba(0,0,0,0.15);
 }
 
+.hero__invite {
+  margin: 0 auto 0.8rem;
+  max-width: 22ch;
+  font-family: "Ephesis", cursive;
+  font-size: clamp(1.4rem, 4vw, 2.05rem);
+  font-weight: 400;
+  line-height: 1.2;
+  color: #8a754a;
+  text-align: center;
+}
+
 .eyebrow--names {
   display: flex;
   flex-direction: column;
