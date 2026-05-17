@@ -16,119 +16,43 @@ const wedding = {
 const intro = document.getElementById("intro");
 const openInvite = document.getElementById("openInvite");
 const audio = document.getElementById("weddingAudio");
-const form = document.getElementById("rsvpForm");
-const formStatus = document.getElementById("formStatus");
 const introCta = document.getElementById("introCta");
 const envelopeSealed = document.getElementById("envelopeSealed");
-const envelopeBlank = document.getElementById("envelopeBlank");
 const envelopeOpen = document.getElementById("envelopeOpen");
-const envelopeGlow = document.getElementById("envelopeGlow");
 const envelopeStage = document.querySelector(".envelope-stage");
 const heroSection = document.querySelector(".hero");
-const sealPieces = [
-  document.getElementById("sealPiece1"),
-  document.getElementById("sealPiece2"),
-  document.getElementById("sealPiece3"),
-  document.getElementById("sealPiece4"),
-].filter(Boolean);
 
 let invitationOpened = false;
 let introTl = null;
 
 /* === Envelope reveal animation ================================== */
 
-// Each fragment gets a different flight vector + spin so the shatter feels chaotic.
-const PIECE_FLIGHTS = [
-  { x: -210, y: -120, rot: -200, scaleEnd: 0.7,  dur: 1.20 },
-  { x:  220, y:  -80, rot:  170, scaleEnd: 0.65, dur: 1.10 },
-  { x: -130, y:  170, rot:  140, scaleEnd: 0.55, dur: 1.00 },
-  { x:  170, y:  160, rot: -160, scaleEnd: 0.50, dur: 0.95 },
-];
-
 function resetEnvelopeState() {
   if (!window.gsap) return;
-  gsap.set(envelopeSealed, { scale: 1, y: 0, rotate: 0, opacity: 1 });
-  gsap.set(envelopeBlank,  { scale: 1, y: 0, rotate: 0, opacity: 1 });
-  gsap.set(envelopeOpen,   { scale: 0.97, y: 0, rotate: 0, opacity: 0 });
-  gsap.set(envelopeGlow,   { opacity: 0, scale: 0.7 });
-  gsap.set(envelopeStage,  { scale: 1, y: 0 });
-  sealPieces.forEach((piece) => {
-    gsap.set(piece, { x: 0, y: 0, rotation: 0, scale: 1, opacity: 0 });
-  });
+  gsap.set(envelopeSealed, { scale: 1, opacity: 1 });
+  gsap.set(envelopeOpen,   { scale: 0.98, opacity: 0 });
+  gsap.set(envelopeStage,  { scale: 1, y: 0, opacity: 1 });
 }
 
 function buildIntroTimeline() {
   if (!window.gsap) return null;
-  const tl = gsap.timeline({ paused: true, defaults: { ease: "power3.out" } });
+  const tl = gsap.timeline({ paused: true, defaults: { ease: "power2.out" } });
 
-  // 1. Press feedback — sealed envelope pushes in slightly.
-  tl.to(envelopeSealed, {
-    scale: 1.035,
-    duration: 0.16,
-    ease: "power2.in",
-  }, 0);
+  // 1. Subtle press on the sealed envelope.
+  tl.to(envelopeSealed, { scale: 1.04, duration: 0.18, ease: "power2.in" }, 0);
 
-  // 2. Warm glow blooms across the seal.
-  tl.to(envelopeGlow, {
-    opacity: 1,
-    scale: 1.25,
-    duration: 0.34,
-    ease: "power2.out",
-  }, 0.08);
+  // 2. Cross-fade sealed → open (with the K&Đ card peeking out).
+  tl.to(envelopeOpen,   { opacity: 1, scale: 1, duration: 0.55 }, 0.18);
+  tl.to(envelopeSealed, { opacity: 0, duration: 0.45 }, 0.20);
 
-  // 3. SHATTER — at the peak of the press, the sealed image cuts out and
-  //    the fragments take its place at the seal position.
-  tl.set(envelopeSealed, { opacity: 0 }, 0.22);
-  sealPieces.forEach((piece) => {
-    tl.set(piece, { opacity: 1, x: 0, y: 0, rotation: 0, scale: 1 }, 0.22);
-  });
-
-  // 4. Fragments fly outward with different vectors + spins, then fade.
-  sealPieces.forEach((piece, i) => {
-    const f = PIECE_FLIGHTS[i] || PIECE_FLIGHTS[0];
-    tl.to(piece, {
-      x: f.x,
-      y: f.y,
-      rotation: f.rot,
-      scale: f.scaleEnd,
-      opacity: 0,
-      duration: f.dur,
-      ease: "power2.out",
-    }, 0.22);
-  });
-
-  // 5. Glow fades with the shatter.
-  tl.to(envelopeGlow, {
+  // 3. Hold a beat so the card reads, then gently fade the whole stage.
+  tl.to(envelopeStage, {
     opacity: 0,
-    scale: 1.55,
-    duration: 0.6,
-    ease: "power2.out",
-  }, 0.40);
-
-  // 6. Cross-fade from the sealed-but-closed envelope into the open
-  //    envelope with the K&Đ card peeking out — reads as the flap opening.
-  tl.to(envelopeOpen, {
-    opacity: 1,
-    scale: 1,
-    duration: 0.35,
-    ease: "power2.out",
-  }, 0.45);
-  tl.to(envelopeBlank, {
-    opacity: 0,
-    duration: 0.30,
+    scale: 1.02,
+    y: -20,
+    duration: 0.9,
     ease: "power2.inOut",
-  }, 0.55);
-
-  // 7. The opened envelope lifts away — the hero behind starts to show
-  //    through as the intro overlay fades.
-  tl.to(envelopeOpen, {
-    scale: 0.94,
-    y: -64,
-    rotate: -2.4,
-    opacity: 0,
-    duration: 1.15,
-    ease: "power3.inOut",
-  }, 0.85);
+  }, 1.05);
 
   return tl;
 }
@@ -178,7 +102,7 @@ function startAudioSwell(totalAnimMs) {
 // fading out — by then the envelope has lifted away and the hero behind
 // begins to show. Hero gets `is-visible` at the same moment so its own
 // scale-up animation cross-fades with the intro fade.
-const INTRO_DURATION_MS = 2000;
+const INTRO_DURATION_MS = 1900;
 
 // Slow continuous drift downward once the hero settles. Driven by a
 // GPU-composited transform on <body> via Web Animations so it's smooth at
@@ -321,19 +245,6 @@ function setupCalendarLink() {
 
   document.getElementById("googleCalendar").href = `https://www.google.com/calendar/render?${params.toString()}`;
 }
-
-form.addEventListener("submit", (event) => {
-  event.preventDefault();
-  const data = Object.fromEntries(new FormData(form).entries());
-  localStorage.setItem("wedding-rsvp", JSON.stringify({ ...data, sentAt: new Date().toISOString() }));
-
-  const text = encodeURIComponent(
-    `RSVP za venčanje\nIme: ${data.name}\nDolazim: ${data.answer}\nBroj gostiju: ${data.guests}\nPoruka: ${data.message || "-"}`
-  );
-
-  formStatus.innerHTML = `Sačuvano. Za sada potvrdu možete poslati i preko <a href="mailto:djordje.novcic95@gmail.com?subject=RSVP%20za%20ven%C4%8Danje&body=${text}">emaila</a>.`;
-  form.reset();
-});
 
 setupCalendarLink();
 updateCountdown();

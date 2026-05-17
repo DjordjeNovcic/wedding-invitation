@@ -12,7 +12,6 @@
       <link rel="preconnect" href="https://fonts.googleapis.com" />
       <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
       <link rel="preload" as="image" href="assets/envelope-seal.jpg" fetchpriority="high" />
-      <link rel="preload" as="image" href="assets/envelope-blank.jpg" />
       <link rel="preload" as="image" href="assets/envelope-open.jpg" />
       <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Great+Vibes&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet" />
       <link rel="stylesheet" href="styles.css" />
@@ -23,10 +22,6 @@
             <div class="intro-scene">
                <div class="intro-bokeh" aria-hidden="true"></div>
                <div class="envelope-stage" aria-hidden="true">
-                  <img class="envelope envelope--blank" id="envelopeBlank"
-                       src="assets/envelope-blank.jpg"
-                       alt=""
-                       draggable="false" />
                   <img class="envelope envelope--open" id="envelopeOpen"
                        src="assets/envelope-open.jpg"
                        alt="Otvorena koverta sa monogramom K i Đ"
@@ -35,11 +30,6 @@
                        src="assets/envelope-seal.jpg"
                        alt="Koverta sa voštanim pečatom"
                        draggable="false" />
-                  <div class="envelope-glow" id="envelopeGlow" aria-hidden="true"></div>
-                  <img class="seal-piece seal-piece--1" id="sealPiece1" src="assets/seal-piece-1.png" alt="" draggable="false" />
-                  <img class="seal-piece seal-piece--2" id="sealPiece2" src="assets/seal-piece-2.png" alt="" draggable="false" />
-                  <img class="seal-piece seal-piece--3" id="sealPiece3" src="assets/seal-piece-3.png" alt="" draggable="false" />
-                  <img class="seal-piece seal-piece--4" id="sealPiece4" src="assets/seal-piece-4.png" alt="" draggable="false" />
                </div>
                <div class="intro-cta" id="introCta" aria-hidden="true">
                   <span class="intro-cta__pill">Dodirni pečat</span>
@@ -176,53 +166,10 @@
          <section class="rsvp section-reveal" aria-label="Potvrda dolaska">
             <div class="rsvp__card">
                <div class="rsvp__ornament" aria-hidden="true">✦</div>
-               <p class="eyebrow">RSVP</p>
-               <h3>Potvrdite dolazak</h3>
-               <p class="rsvp__note">Molimo vas da potvrdite prisustvo do 1. septembra 2026.</p>
+               <p class="eyebrow">Obaveštenje</p>
+               <h3>Potvrda dolaska</h3>
+               <p class="rsvp__note">Molimo vas da nam svoj dolazak potvrdite do 1. septembra 2026.</p>
                <p class="rsvp__subnote">Vaš odgovor nam pomaže da sve pripremimo baš kako treba za naš dan.</p>
-               <form id="rsvpForm">
-                  <div class="field-shell">
-                     <label>
-                     Ime i prezime
-                     <input name="name" type="text" autocomplete="name" placeholder="Unesite ime i prezime" required />
-                     </label>
-                  </div>
-                  <div class="field-shell">
-                     <label>
-                     Broj gostiju
-                     <input name="guests" type="number" min="1" max="10" value="1" required />
-                     </label>
-                  </div>
-                  <fieldset class="choice-group">
-                     <legend>Da li dolazite?</legend>
-                     <div class="choice-grid">
-                        <label class="radio-card">
-                        <input type="radio" name="answer" value="Da" checked />
-                        <span class="radio-card__indicator" aria-hidden="true"></span>
-                        <span class="radio-card__content">
-                        <span class="radio-card__title">Da, dolazim</span>
-                        <span class="radio-card__meta">Biću sa vama tog dana</span>
-                        </span>
-                        </label>
-                        <label class="radio-card">
-                        <input type="radio" name="answer" value="Ne" />
-                        <span class="radio-card__indicator" aria-hidden="true"></span>
-                        <span class="radio-card__content">
-                        <span class="radio-card__title">Ne mogu</span>
-                        <span class="radio-card__meta">Javljam da ne planiramo mesto uzalud</span>
-                        </span>
-                        </label>
-                     </div>
-                  </fieldset>
-                  <div class="field-shell">
-                     <label>
-                     Poruka
-                     <textarea name="message" rows="4" placeholder="Ako želite, ostavite kratku poruku za mladence"></textarea>
-                     </label>
-                  </div>
-                  <button type="submit">Pošalji potvrdu</button>
-               </form>
-               <p class="form-status" id="formStatus" aria-live="polite"></p>
             </div>
          </section>
       </main>
